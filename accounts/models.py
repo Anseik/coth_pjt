@@ -11,5 +11,5 @@ class User(AbstractUser):
                                 format='png',
                                 options={'quality': 100},
                                 upload_to='%Y/%m/%d')
-    selfpr = models.CharField(max_length=200)
-    nickname = models.CharField(max_length=100)
+    selfpr = models.CharField(max_length=100)
+    nickname = models.CharField(max_length=20)

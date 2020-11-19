@@ -4,25 +4,25 @@
   <div class="mb-5">
     <h1>Review Detail</h1>
     <a class="btn btn-primary" href="{% url 'articles:review_index' %}">목록</a>
+    <a class="btn btn-primary" href="{% url 'articles:review_update' review.pk %}">리뷰 수정</a>
+    <form class="d-inline" action="{% url 'articles:review_delete' review.pk %}" method="POST">
+      {% csrf_token %}
+      <button class="btn btn-primary">리뷰 삭제</button>
+    </form>
   </div>
   <!-- 본문 -->
-  <div>
-    <h3>{{ review.title }}</h3>
+  <div class="jumbotron py-5">
+    <h3 class="display-5 mb-3">{{ review.title }}</h3>
     {% if review.image %}
-      <img src="{{ review.image.url }}" alt="{{ review.image }}">
+      <img class="mb-3" src="{{ review.image.url }}" alt="{{ review.image }}">
     {% endif %}
-    <p>내용 :{{ review.content }}</p>
+    <p class="lead">평점{{ review.rank }}</p>
+    <p class="lead">{{ review.content }}</p>
+    <hr class="my-4">
     <p>작성시간 : {{ review.created_at }}</p>
     <p>수정시간 : {{ review.updated_at }}</p>
   </div>
-  <!-- 수정, 삭제 -->
-  <div>
-    <a class="btn btn-info" href="{% url 'articles:review_update' review.pk %}">리뷰 수정</a>
-    <form class="d-inline" action="{% url 'articles:review_delete' review.pk %}" method="POST">
-      {% csrf_token %}
-      <button class="btn btn-info">리뷰 삭제</button>
-    </form>
-  </div>
+  <hr>
   <!-- 댓글 작성 -->
   <div>
     <form class="form" action="{% url 'articles:review_create_comment' review.pk %}" method="POST">
@@ -33,16 +33,20 @@
           댓글작성
         </button>
       {% endbuttons %}
-    </form>  
+    </form>
   </div>
   <!-- 댓글 보여주기 -->
-  <div>
+  <div class="mb-5">
     {% for review_comment in review_comments %}
-      <li>{{review_comment.user}}: {{ review_comment.content }}</li>
-      <form class="d-inline" action="{% url 'articles:review_delete_comment' review.pk review_comment.pk %}" method="POST">
-        {% csrf_token %}
-        <button>댓글삭제</button>
-      </form>
+      <ul class="list-group pl-0">
+        <div class="list-group-item d-flex justify-content-between">
+          <li class="d-inline">{{review_comment.user}}: {{ review_comment.content }}</li>
+          <form class="d-inline" action="{% url 'articles:review_delete_comment' review.pk review_comment.pk %}" method="POST">
+            {% csrf_token %}
+            <button class="btn btn-sm btn-secondary">삭제</button>
+          </form>
+        </div>
+      </ul>
     {% endfor %}
   </div>
 {% endblock %}

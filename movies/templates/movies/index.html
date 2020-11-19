@@ -1,4 +1,18 @@
 {% extends 'base.html' %}
 {% block content %}
-movies
+  <div class="container">
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-4">
+      {% for movie in movies %}
+        <div class="card col" style="width: 18rem;">
+          <img src="http://image.tmdb.org/t/p/w185/{{ movie.poster_path }}" class="card-img-top" alt="poster_path" style="height:350px">
+          <div class="card-body">
+            <h5 class="card-title text-center" style="height:50px">{{ movie.title }}</h5>
+            <p class="card-text text-center">평점 : {{ movie.vote_average }}</p>
+            <p class="text-center"><a href="#" class="btn btn-primary">상세정보</a></p>
+            {% comment %} 포스터에 마우스를 올리면 팝업창으로 overview와 장르 등이 보이게하기 {% endcomment %}
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
 {% endblock  %}

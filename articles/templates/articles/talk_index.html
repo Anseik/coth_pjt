@@ -1,13 +1,27 @@
 {% extends 'base.html' %}
 {% block content %}
-  <h1>Talk</h1>
-  <div class="mb-5">
-    <a class="btn btn-info" href="{% url 'articles:talk_create' %}">새글 작성</a>
+  <div class="d-flex justify-content-between my-5">
+    <h1 class="d-inline">Movie Talk</h1>
+    <p class="d-inline"><a class="btn btn-info" href="{% url 'articles:talk_create' %}">글 작성</a></p>
   </div>
-  {% for talk in talks %}
-    <p>title : {{ talk.title }}</p>
-    <p>content: {{ talk.content }}</p>
-    <a class="btn btn-sm btn-secondary" href="{% url 'articles:talk_detail' talk.pk %}">Detail</a>
-    <hr>
-  {% endfor %}
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th scope="col">작성자</th>
+        <th scope="col">제목</th>
+        <th scope="col">작성시각</th>
+        <th scope="col">조회수</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for talk in talks  %}
+        <tr>
+          <th scope="row">{{ talk.user }}</th>
+          <td><a href="{% url 'articles:talk_detail' talk.pk %}">{{ talk.title }}</a></td>
+          <td>{{ talk.created_at}}</td>
+          <td>미구현</td>
+        </tr>
+      {% endfor %}    
+    </tbody>
+  </table>
 {% endblock  %}

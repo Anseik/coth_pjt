@@ -15,30 +15,38 @@
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav">
         <li class="nav-item">
-          <a class="nav-link" href="{% url 'movies:index' %}">Home</a>
-        </li>
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            Community
-          </a>
-          <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-            <a class="dropdown-item" href="{% url 'articles:review_index' %}">review</a>
-            <a class="dropdown-item" href="{% url 'articles:talk_index' %}">talk</a>
-          </div>
+          <a class="nav-link" href="{% url 'movies:index' %}">Movies</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="{% url 'accounts:signup' %}">Signup</a>
+          <a class="nav-link" href="{% url 'articles:review_index' %}">review</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="{% url 'accounts:login' %}">Login</a>
+          <a class="nav-link" href="{% url 'articles:talk_index' %}">talk</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" href="{% url 'accounts:logout' %}">Logout</a>
-        </li>
-        {% comment %} <li class="nav-item">
-          <a class="nav-link" href="{% url 'accounts:update' %}">회원정보수정</a>
-        </li> {% endcomment %}
+        {% comment %} 
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Community
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+              <a class="dropdown-item" href="{% url 'articles:review_index' %}">review</a>
+              <a class="dropdown-item" href="{% url 'articles:talk_index' %}">talk</a>
+            </div>
+          </li>
+        {% endcomment %}
       </ul>
+    </div>
+    <div class="collapse navbar-collapse d-flex justify-content-end" id="navbarNav">
+      {% if request.user.is_authenticated %}
+          <span class="">안녕하세요 <a href="{% url 'accounts:profile' request.user.pk %}">{{ request.user.username }}</a>님</span>
+          {% if request.user.is_superuser %}
+            <a class="ml-3" href="{% url 'movies:getdata' %}">getdata</a>
+          {% endif %}
+          <a class="nav-link" href="{% url 'accounts:logout' %}">Logout</a>
+      {% else %}
+        <a class="nav-link" href="{% url 'accounts:signup' %}">Signup</a>
+        <a class="nav-link" href="{% url 'accounts:login' %}">Login</a>
+      {% endif %}    
     </div>
   </nav>
   <div class="container">

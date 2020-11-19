@@ -1,19 +1,20 @@
 from django.shortcuts import render, redirect, get_object_or_404
 
-from django.contrib.auth import get_user_model
-from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm
-from .forms import CustomUserCreationForm, CustomUserChangeForm
+from django.contrib.auth import get_user_model, update_session_auth_hash
 from django.contrib.auth import login as auth_login
 from django.contrib.auth import logout as auth_logout
+from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm
 
 from django.views.decorators.http import require_http_methods, require_POST, require_GET
 
+from .forms import CustomUserCreationForm, CustomUserChangeForm
 
 # Create your views here.
 @require_http_methods(['GET', 'POST'])
 def signup(request):
     if request.user.is_authenticated:
         return redirect('movies:index')
+
     if request.method == 'POST':
         form = CustomUserCreationForm(request.POST, request.FILES)
         if form.is_valid():
@@ -53,26 +54,51 @@ def logout(request):
     auth_logout(request)
     return redirect('movies:index')
 
-# @require_http_methods(['GET', 'POST'])
-# def update(request, user_pk):
-#     user = get_object_or_404(get_user_model(), pk=user_pk)
-#     if request.method == 'POST':
-#         form = CustomUserChangeForm(request.POST, request.FILES, instance=user)
-#         if form.is_valid():
-#             form.save()
-#             return redirect('movies:index')
+
+@require_http_methods(['GET', 'POST'])
+def update(request, user_pk):
+    user = get_object_or_404(get_user_model(), pk=user_pk)
+    if request.method == 'POST':
+        form = CustomUserChangeForm(request.POST, request.FILES, instance=user)
+        if form.is_valid():
+            form.save()
+            return redirect('accounts:profile', user.pk)
     
-#     else:
-#         form = CustomUserChangeForm(instance=user)
-#     context = {
-#         'form': form,
-#     }
-#     return render(request, 'accounts/update.html', context)
+    else:
+        form = CustomUserChangeForm(instance=user)
+    context = {
+        'form': form,
+    }
+    return render(request, 'accounts/update.html', context)
 
 
-# @require_POST
-# def delete(request, user_pk):
-#     user = get_object_or_404(get_user_model(), pk=user_pk)
-#     user.delete()
-#     return redirect('movies:index')
+@require_http_methods(['GET', 'POST'])
+def password_change(request, user_pk):
+    if request.method == "POST":
+        form = PasswordChangeForm(request.user, request.POST)
+        if form.is_valid():
+            form.save()
+            update_session_auth_hash(request, request.user)
+            return redirect('accounts:update', request.user.pk)
+    else:
+        form = PasswordChangeForm(request.user)
+    context ={
+        'form': form,
+    }
+    return render(request, 'accounts/password_change.html', context)
 
+
+@require_POST
+def delete(request, user_pk):
+    user = get_object_or_404(get_user_model(), pk=user_pk)
+    user.delete()
+    return redirect('movies:index')
+
+
+@require_GET
+def profile(request, user_pk):
+    person = get_object_or_404(get_user_model(), pk=user_pk)
+    context = {
+        'person': person,
+    }
+    return render(request, 'accounts/profile.html', context)

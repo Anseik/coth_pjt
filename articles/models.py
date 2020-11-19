@@ -7,10 +7,10 @@ class ReviewArticle(models.Model):
     like = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='like_review')
     unlike = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='unlike_review')
 
-    title = models.CharField(max_length=200)
+    title = models.CharField(max_length=50)
     content = models.TextField()
-    created_at = models.DateField(auto_now_add=True)
-    updated_at = models.DateField(auto_now=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
     image = models.ImageField(blank=True, upload_to='%Y/%m/%d')
     
 
@@ -30,10 +30,10 @@ class ReviewArticle(models.Model):
 class TalkArticle(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
 
-    title = models.CharField(max_length=200)
+    title = models.CharField(max_length=50)
     content = models.TextField()
-    created_at = models.DateField(auto_now_add=True)
-    updated_at = models.DateField(auto_now=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
     image = models.ImageField(blank=True, upload_to='%Y/%m/%d')
     
     def __str__(self):

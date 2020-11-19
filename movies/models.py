@@ -2,17 +2,21 @@ from django.db import models
 
 # Create your models here.
 class Movie(models.Model):
-    genres = models.CharField(max_length=200)
-    original_title = models.TextField()
-    overview = models.TextField()
     popularity = models.IntegerField()
-    poster_path = models.TextField()
-    release_date = models.CharField(max_length=200)
-    runtime = models.IntegerField()
-    title = models.TextField()
-    video = models.BooleanField()
-    vote_average = models.IntegerField()
     vote_count = models.IntegerField()
+    video = models.BooleanField()
+    poster_path = models.TextField()
+    original_language = models.TextField()
+    original_title = models.TextField()
+    genre_ids = models.TextField()
+    title = models.TextField()
+    vote_average = models.IntegerField()
+    overview = models.TextField()
+    release_date = models.TextField()
+
+
+class MovieInfo(models.Model):
+    genres = models.TextField()
     rank_average = models.IntegerField()
     
     class Rank(models.IntegerChoices):

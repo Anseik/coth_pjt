@@ -4,25 +4,24 @@
   <div class="mb-5">
     <h1>Talk Detail</h1>
     <a class="btn btn-primary" href="{% url 'articles:talk_index' %}">목록</a>
+    <a class="btn btn-primary" href="{% url 'articles:talk_update' talk.pk %}">글 수정</a>
+    <form class="d-inline" action="{% url 'articles:talk_delete' talk.pk %}" method="POST">
+      {% csrf_token %}
+      <button class="btn btn-primary">글 삭제</button>
+    </form>    
   </div>
   <!-- 본문 -->
-  <div>
-    <h3>{{ talk.title }}</h3>
+  <div class="jumbotron py-5">
+    <h3 class="display-5 mb-3">{{ talk.title }}</h3>
     {% if talk.image %}
-      <img src="{{ talk.image.url }}" alt="{{ talk.image }}">
-    {% endif %}
-    <p>내용 : {{ talk.content }}<p>
+      <img class="mb-3" src="{{ talk.image.url }}" alt="{{ talk.image }}">
+    {% endif %}  
+    <p class="lead">{{ talk.content }}</p>
+    <hr class="my-4">
     <p>작성시간 : {{ talk.created_at }}</p>
     <p>수정시간 : {{ talk.updated_at }}</p>
   </div>
-  <!-- 수정, 삭제 -->
-  <div>
-    <a class="btn btn-info" href="{% url 'articles:talk_update' talk.pk %}">잡담글 수정</a>
-    <form class="d-inline" action="{% url 'articles:talk_delete' talk.pk %}" method="POST">
-      {% csrf_token %}
-      <button class="btn btn-info">잡담글 삭제</button>
-    </form>
-  </div>
+  <hr>
   <!-- 댓글 작성 -->
   <div>
     <form class="form" action="{% url 'articles:talk_create_comment' talk.pk %}" method="POST">

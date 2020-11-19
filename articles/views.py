@@ -1,4 +1,4 @@
-from django.shortcuts import render ,redirect, get_object_or_404
+from django.shortcuts import render, redirect, get_object_or_404
 from .models import ReviewArticle, ReviewComment, TalkArticle, TalkComment
 from .forms import ReviewArticleForm, ReviewCommentForm, TalkArticleForm, TalkCommentForm
 from django.views.decorators.http import require_http_methods, require_POST, require_GET

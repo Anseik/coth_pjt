@@ -1,13 +1,31 @@
 {% extends 'base.html' %}
 {% block content %}
-  <h1>Movie Review</h1>
-  <div class="mb-5">
-    <a class="btn btn-info" href="{% url 'articles:review_create' %}">새글 작성</a>
+  <div class="d-flex justify-content-between my-5">
+    <h1 class="d-inline">Movie Review</h1>
+    <p class="d-inline"><a class="btn btn-info" href="{% url 'articles:review_create' %}">리뷰 작성</a></p>
   </div>
-  {% for review in reviews  %}
-    <p>title : {{ review.title }}</p>
-    <p>content: {{ review.content }}</p>
-    <a class="btn btn-sm btn-secondary" href="{% url 'articles:review_detail' review.pk %}">Detail</a>
-    <hr>
-  {% endfor %}
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th scope="col">작성자</th>
+        <th scope="col">제목</th>
+        <th scope="col">작성시각</th>
+        <th scope="col">평점</th>
+        <th scope="col">조회수</th>
+        <th scope="col">추천수</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for review in reviews  %}
+        <tr>
+          <th scope="row">{{ review.user }}</th>
+          <td><a href="{% url 'articles:review_detail' review.pk %}">{{ review.title }}</a></td>
+          <td>{{ review.created_at}}</td>
+          <td>{{ review.rank}}</td>
+          <td>미구현</td>
+          <td>미구현</td>
+        </tr>
+      {% endfor %}    
+    </tbody>
+  </table>
 {% endblock  %}
