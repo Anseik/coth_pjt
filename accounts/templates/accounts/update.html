@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% load bootstrap4 %}
+{% load static %}
+{% block content %}
+  <form action="{url 'accounts:update' request.user.pk }" method="POST" class="form">
+    {% csrf_token %}
+    {% bootstrap_form form %}
+    {% buttons %}
+      <button type="submit">
+        수정
+      </button>
+    {% endbuttons %}
+  </form>
+  <form action="{% url 'accounts:delete' request.user.pk %}" method="POST" class="form">
+    {% csrf_token %}
+    <button type="submit">
+      회원탈퇴
+    </button>
+  </form>
+  
+{% endblock %}

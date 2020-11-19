@@ -11,7 +11,7 @@ class ReviewArticle(models.Model):
     content = models.TextField()
     created_at = models.DateField(auto_now_add=True)
     updated_at = models.DateField(auto_now=True)
-    image = models.ImageField()
+    image = models.ImageField(blank=True, upload_to='%Y/%m/%d')
     
 
     class Rank(models.IntegerChoices):
@@ -34,18 +34,28 @@ class TalkArticle(models.Model):
     content = models.TextField()
     created_at = models.DateField(auto_now_add=True)
     updated_at = models.DateField(auto_now=True)
-    image = models.ImageField()
+    image = models.ImageField(blank=True, upload_to='%Y/%m/%d')
     
     def __str__(self):
         return self.title
 
 
-class CommunityComment(models.Model):
+class ReviewComment(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     review_article = models.ForeignKey(ReviewArticle, on_delete=models.CASCADE)
+    # 대댓글 기능 구현
+
+    content = models.CharField(max_length=100) 
+
+    def __str__(self):
+        return self.content
+
+
+class TalkComment(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     talk_article = models.ForeignKey(TalkArticle, on_delete=models.CASCADE)
     # 대댓글 기능 구현
-    
+
     content = models.CharField(max_length=100) 
 
     def __str__(self):

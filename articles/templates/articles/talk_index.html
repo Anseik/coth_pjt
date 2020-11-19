@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block content %}
+  <h1>Talk</h1>
+  <div class="mb-5">
+    <a class="btn btn-info" href="{% url 'articles:talk_create' %}">새글 작성</a>
+  </div>
+  {% for talk in talks %}
+    <p>title : {{ talk.title }}</p>
+    <p>content: {{ talk.content }}</p>
+    <a class="btn btn-sm btn-secondary" href="{% url 'articles:talk_detail' talk.pk %}">Detail</a>
+    <hr>
+  {% endfor %}
+{% endblock  %}

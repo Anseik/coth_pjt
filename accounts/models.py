@@ -12,3 +12,4 @@ class User(AbstractUser):
                                 options={'quality': 100},
                                 upload_to='%Y/%m/%d')
     selfpr = models.CharField(max_length=200)
+    nickname = models.CharField(max_length=100)
