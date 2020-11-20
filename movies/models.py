@@ -6,6 +6,7 @@ class Movie(models.Model):
     vote_count = models.IntegerField()
     video = models.BooleanField()
     poster_path = models.TextField()
+    movie_id = models.IntegerField()
     original_language = models.TextField()
     original_title = models.TextField()
     genre_ids = models.TextField()

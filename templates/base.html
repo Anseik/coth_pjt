@@ -19,13 +19,13 @@
   <nav class="navbar navbar-expand-lg">
       <div class="header_container">
           <div class="logo">          
-              <a href="">
+              <a href="{% url 'movies:index' %}">
                   <img src="{% static './assets/img/brand_logo_final.png' %}" alt="COTH">
               </a>
               <button class="header_toggleBtn"><i class="fa fa-bars"></i></button>
           </div>
-          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon text-light" style="100px;">+</span>
+          <button class="navbar-toggler p-0 pt-2 border-none" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon text-light" style="">+</span>
           </button>
           <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="main_nav navbar-nav">
@@ -53,11 +53,11 @@
                 <li class="sub_nav_tab nav-item"><i class="fas fa-search"></i> 검색</li>
                 <li class="sub_nav_tab nav-item"><i class="fas fa-bell"> 알림</i></li>
                 {% if request.user.is_authenticated %}
-                  <li class="sub_nav_tab nav-item"><a class="text-reset text-decoration-none nav-link" href="{% url 'accounts:profile' request.user.pk %}"><i class="fas fa-user"> {{ request.user.username }}</i></a></li>
-                  <li class="sub_nav_tab nav-item"><a class="text-reset text-decoration-none nav-link" href="{% url 'accounts:logout' %}"><i class="fas fa-sign-out-alt"></i> 로그아웃</a></li>
+                  <li class="sub_nav_tab nav-item"><a class="text-reset text-decoration-none nav-link p-0" href="{% url 'accounts:profile' request.user.pk %}"><i class="fas fa-user"> {{ request.user.username }}</i></a></li>
+                  <li class="sub_nav_tab nav-item"><a class="text-reset text-decoration-none nav-link p-0" href="{% url 'accounts:logout' %}"><i class="fas fa-sign-out-alt"></i> 로그아웃</a></li>
                 {% else %}
-                  <li class="sub_nav_tab nav-item"><a class="text-reset text-decoration-none nav-link" href="{% url 'accounts:signup' %}"><i class="fas fa-user-plus"></i> 회원가입</a></li>
-                  <li class="sub_nav_tab nav-item"><a class="text-reset text-decoration-none nav-link" href="{% url 'accounts:login' %}"><i class="fas fa-sign-in-alt"></i> 로그인</a></li>
+                  <li class="sub_nav_tab nav-item"><a class="text-reset text-decoration-none nav-link p-0" href="{% url 'accounts:signup' %}"><i class="fas fa-user-plus"></i> 회원가입</a></li>
+                  <li class="sub_nav_tab nav-item"><a class="text-reset text-decoration-none nav-link p-0" href="{% url 'accounts:login' %}"><i class="fas fa-sign-in-alt"></i> 로그인</a></li>
                 {% endif %}
             </ul>
           </div>

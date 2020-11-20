@@ -1,6 +1,8 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
+
+  <!-- 평점 순 top10 -->
   <div class="d-block mt-5 mx-auto" style="width:300px;height:500px;">
     <div id="top10" class="carousel slide" data-ride="carousel">
       <ol class="carousel-indicators">
@@ -41,20 +43,7 @@
     </div>
   </div>
 
-
-  <!-- 메인포스터 -->
-   
-  {% comment %} <main>
-    <div class="popular_movie">
-        <img src="{% static './assets/img/main_img.jpeg' %}" alt="popular movie" class="popular_movie_img">
-        <div class="popular_movie_info">
-            <div class="popular_movie_title"></div>
-            <div class="popular_movie_overview"></div>
-            <div class="popular_movie_rank"></div>
-        </div>
-    </div>
-  </main> {% endcomment %}
- 
+  <!-- 당신 취향 영화 -->
 
   <!-- 영화 카드 -->
     <h3 class="text-white">&ensp;&ensp;&ensp;#전체영화</h3><br>

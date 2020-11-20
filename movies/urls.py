@@ -6,4 +6,5 @@ urlpatterns = [
     path('savedata/', views.savedata, name="savedata"),
     path('deletedata/', views.deletedata, name="deletedata"),
     path('', views.index, name="index"),
+    path('similar/<int:movie_pk>/', views.similar, name="similar"),
 ]
