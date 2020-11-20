@@ -11,6 +11,8 @@ urlpatterns = [
     path('review/<int:review_pk>/delete/', views.review_delete, name='review_delete'),
     path('review/<int:review_pk>/comments/', views.review_create_comment, name='review_create_comment'),
     path('review/<int:review_pk>/comments/<int:comment_pk>/', views.review_delete_comment, name='review_delete_comment'),
+    path('review/<int:review_pk>/like/', views.like, name='like'),
+    path('review/<int:review_pk>/unlike/', views.unlike, name='unlike'),
 
     # talk
     path('talk/', views.talk_index, name="talk_index"),

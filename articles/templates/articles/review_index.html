@@ -21,9 +21,9 @@
           <th scope="row">{{ review.user }}</th>
           <td><a href="{% url 'articles:review_detail' review.pk %}">{{ review.title }}</a></td>
           <td>{{ review.created_at}}</td>
-          <td>{{ review.rank}}</td>
-          <td>미구현</td>
-          <td>미구현</td>
+          <td>&ensp;{{ review.rank}}</td>
+          <td>&ensp;&ensp;{{ review.hits }}</td>
+          <td>&ensp;&ensp;{{ review.likecount }}</td>
         </tr>
       {% endfor %}    
     </tbody>

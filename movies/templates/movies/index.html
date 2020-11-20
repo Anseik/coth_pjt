@@ -1,18 +1,82 @@
 {% extends 'base.html' %}
+{% load static %}
 {% block content %}
-  <div class="container">
+  <div class="d-block mt-5 mx-auto" style="width:300px;height:500px;">
+    <div id="top10" class="carousel slide" data-ride="carousel">
+      <ol class="carousel-indicators">
+        <li data-target="#top10" data-slide-to="0" class="active"></li>
+        <li data-target="#top10" data-slide-to="1"></li>
+        <li data-target="#top10" data-slide-to="2"></li>
+        <li data-target="#top10" data-slide-to="3"></li>
+        <li data-target="#top10" data-slide-to="4"></li>
+        <li data-target="#top10" data-slide-to="5"></li>
+        <li data-target="#top10" data-slide-to="6"></li>
+        <li data-target="#top10" data-slide-to="7"></li>
+        <li data-target="#top10" data-slide-to="8"></li>
+        <li data-target="#top10" data-slide-to="9"></li>
+      </ol>
+      <div class="carousel-inner">
+        {% for top_movie in top_movies %}
+          {% if forloop.first %}
+          <div class="carousel-item active">
+          {% else %}
+          <div class="carousel-item">
+          {% endif %}
+            <img src="http://image.tmdb.org/t/p/w185/{{ top_movie.poster_path }}" class="d-block w-100" alt="...">
+            <div class="carousel-caption d-none d-md-block">
+              <h5>{{ top_movie.title }}</h5>
+              <p>평점 : {{ top_movie.vote_average}}</p>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+      <a class="carousel-control-prev" href="#top10" role="button" data-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="sr-only">Previous</span>
+      </a>
+      <a class="carousel-control-next" href="#top10" role="button" data-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
+      </a>
+    </div>
+  </div>
+
+
+  <!-- 메인포스터 -->
+   
+  {% comment %} <main>
+    <div class="popular_movie">
+        <img src="{% static './assets/img/main_img.jpeg' %}" alt="popular movie" class="popular_movie_img">
+        <div class="popular_movie_info">
+            <div class="popular_movie_title"></div>
+            <div class="popular_movie_overview"></div>
+            <div class="popular_movie_rank"></div>
+        </div>
+    </div>
+  </main> {% endcomment %}
+ 
+
+  <!-- 영화 카드 -->
+    <h3 class="text-white">&ensp;&ensp;&ensp;#전체영화</h3><br>
     <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-4">
       {% for movie in movies %}
-        <div class="card col" style="width: 18rem;">
-          <img src="http://image.tmdb.org/t/p/w185/{{ movie.poster_path }}" class="card-img-top" alt="poster_path" style="height:350px">
-          <div class="card-body">
-            <h5 class="card-title text-center" style="height:50px">{{ movie.title }}</h5>
-            <p class="card-text text-center">평점 : {{ movie.vote_average }}</p>
-            <p class="text-center"><a href="#" class="btn btn-primary">상세정보</a></p>
-            {% comment %} 포스터에 마우스를 올리면 팝업창으로 overview와 장르 등이 보이게하기 {% endcomment %}
-          </div>
+        <div class="d-flex justify-content-center">
+          <figure class="snip1436">
+            <img src="http://image.tmdb.org/t/p/w185/{{ movie.poster_path }}" alt="" />
+            <figcaption>
+                <h4>{{ movie.title }}</h4>
+                <p>평점 : {{ movie.vote_average }}</p>
+                {% comment %} <p>{{ movie.overview }}</p> {% endcomment %}
+                <div class="icons"><a href="#"><i class="ion-chatbubbles"></i></a>
+                <a href="#">상세보기<i class="ion-person-add"></i></a>
+                <a href="#">찜하기<i class="ion-heart"></i></a>
+                </div>
+            </figcaption>
+          </figure>
         </div>
       {% endfor %}
     </div>
-  </div>
-{% endblock  %}
+{% endblock content %}
+
+{% block script %}
+{% endblock script %}

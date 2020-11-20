@@ -19,7 +19,7 @@
           <th scope="row">{{ talk.user }}</th>
           <td><a href="{% url 'articles:talk_detail' talk.pk %}">{{ talk.title }}</a></td>
           <td>{{ talk.created_at}}</td>
-          <td>미구현</td>
+          <td>&ensp;&ensp;{{ talk.hits }}</td>
         </tr>
       {% endfor %}    
     </tbody>

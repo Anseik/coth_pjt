@@ -4,11 +4,13 @@
   <div class="mb-5">
     <h1>Talk Detail</h1>
     <a class="btn btn-primary" href="{% url 'articles:talk_index' %}">목록</a>
-    <a class="btn btn-primary" href="{% url 'articles:talk_update' talk.pk %}">글 수정</a>
-    <form class="d-inline" action="{% url 'articles:talk_delete' talk.pk %}" method="POST">
-      {% csrf_token %}
-      <button class="btn btn-primary">글 삭제</button>
-    </form>    
+    {% if request.user == talk.user %}
+      <a class="btn btn-primary" href="{% url 'articles:talk_update' talk.pk %}">글 수정</a>
+      <form class="d-inline" action="{% url 'articles:talk_delete' talk.pk %}" method="POST">
+        {% csrf_token %}
+        <button class="btn btn-primary">글 삭제</button>
+      </form>
+    {% endif %}
   </div>
   <!-- 본문 -->
   <div class="jumbotron py-5">
@@ -23,25 +25,36 @@
   </div>
   <hr>
   <!-- 댓글 작성 -->
-  <div>
-    <form class="form" action="{% url 'articles:talk_create_comment' talk.pk %}" method="POST">
-      {% csrf_token %}
-      {% bootstrap_form talk_comment_form %}
-      {% buttons %}
-        <button type="submit" class="btn btn-secondary">
-          댓글작성
-        </button>
-      {% endbuttons %}
-    </form>  
-  </div>
+  {% if request.user.is_authenticated %}
+    <div>
+      <form class="form" action="{% url 'articles:talk_create_comment' talk.pk %}" method="POST">
+        {% csrf_token %}
+        {% bootstrap_form talk_comment_form %}
+        {% buttons %}
+          <button type="submit" class="btn btn-secondary">
+            댓글작성
+          </button>
+        {% endbuttons %}
+      </form>  
+    </div>
+  {% endif %}
   <!-- 댓글 보여주기 -->
   <div>
-    {% for talk_comment in talk_comments %}
-      <li>{{talk_comment.user}}: {{ talk_comment.content }}</li>
-      <form class="d-inline" action="{% url 'articles:talk_delete_comment' talk.pk talk_comment.pk %}" method="POST">
-        {% csrf_token %}
-        <button>댓글삭제</button>
-      </form>      
-    {% endfor %}
+    <h4 class="mb-3">Comment</h4>
+    <div class="mb-5">
+      {% for talk_comment in talk_comments %}
+        <ul class="list-group pl-0">
+          <div class="list-group-item d-flex justify-content-between">
+            <li class="d-inline">{{talk_comment.user}}: {{ talk_comment.content }}</li>
+            {% if request.user == talk_comment.user %}
+              <form class="d-inline" action="{% url 'articles:talk_delete_comment' talk.pk talk_comment.pk %}" method="POST">
+                {% csrf_token %}
+                <button class="btn btn-sm btn-secondary">삭제</button>
+              </form>
+            {% endif %}
+          </div>
+        </ul>
+      {% endfor %}
+    </div>
   </div>
 {% endblock %}

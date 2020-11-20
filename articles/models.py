@@ -5,15 +5,17 @@ from django.conf import settings
 class ReviewArticle(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     like = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='like_review')
+    likecount = models.IntegerField(default=0)
     unlike = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='unlike_review')
+    unlikecount = models.IntegerField(default=0)
 
     title = models.CharField(max_length=50)
     content = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     image = models.ImageField(blank=True, upload_to='%Y/%m/%d')
+    hits = models.PositiveIntegerField(default=0)
     
-
     class Rank(models.IntegerChoices):
         BEST = 5
         GOOD = 4
@@ -35,6 +37,7 @@ class TalkArticle(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     image = models.ImageField(blank=True, upload_to='%Y/%m/%d')
+    hits = models.PositiveIntegerField(default=0)
     
     def __str__(self):
         return self.title

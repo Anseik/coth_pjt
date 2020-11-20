@@ -6,7 +6,7 @@ class ReviewArticleForm(forms.ModelForm):
 
     class Meta:
         model = ReviewArticle
-        exclude = ['user', 'like', 'unlike',]
+        fields = ['title', 'content', 'image', 'rank',]
 
 
 class ReviewCommentForm(forms.ModelForm):
@@ -20,7 +20,7 @@ class TalkArticleForm(forms.ModelForm):
 
     class Meta:
         model = TalkArticle
-        exclude = ['user',]
+        fields = ['title', 'content', 'image',]
 
 
 class TalkCommentForm(forms.ModelForm):

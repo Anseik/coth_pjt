@@ -8,8 +8,10 @@
       <img width=150px height=150px src="{% static 'accounts/profile.png' %}" class="align-self-center mr-3 rounded-circle border border-warning mt-4" alt="profile">
     {% endif %}
     <div class="media-body">
-      <h1 class="mt-4">{{ person.username }}</h1>
-      {% comment %} <p>{% include 'accounts/_follow.html' %}</p> {% endcomment %}
+      <h1 class="mt-4">{{ person.nickname }}</h1>
+      {% comment %}
+      <p>{% include 'accounts/_follow.html' %}</p>
+      {% endcomment %}
       <p class="mb-0">{{ person.selfpr }}</p>
     </div>
   </div>
@@ -44,8 +46,8 @@
   </ul>
   <hr>  
 
-
-  {% comment %} <ul class="list-group">
+  {% comment %} 
+  <ul class="list-group">
     <li class="list-group-item list-group-item-primary">{{ person.username }}이 좋아요한 게시글</li>
     {% for review in person.like_review.all %}
       <li class="list-group-item"><p class="d-flex justify-content-between my-2">{{ review.title }}&ensp;<a href="{% url 'community:detail' review.pk %}" class="badge badge-success">Go</a></p></li>
@@ -57,7 +59,8 @@
     {% for review in person.unlike_review.all %}
       <li class="list-group-item"><p class="d-flex justify-content-between my-2">{{ review.title }}&ensp;<a href="{% url 'community:detail' review.pk %}" class="badge badge-success">Go</a></p></li>
     {% endfor %}
-  </ul> {% endcomment %}
+  </ul>
+  {% endcomment %}
   
 
 {% endblock %}
