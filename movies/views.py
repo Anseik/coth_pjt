@@ -3,8 +3,10 @@ import requests
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.decorators.http import require_http_methods, require_POST, require_GET
 
-from .models import Movie
+from .models import Movie, MovieComment, UserScore
 from accounts.models import User, UserFavoriteMovie, UserSimilarMovie
+
+from .forms import MovieCommentForm, UserScoreForm
 
 # Create your views here.
 @require_POST
@@ -99,6 +101,93 @@ def index(request):
         'top_movies': top_movies,
     }
     return render(request, 'movies/index.html', context)
+
+
+@require_GET
+def detail(request, movie_pk):
+    movie = get_object_or_404(Movie, pk=movie_pk)
+    user_score_form = UserScoreForm()
+    movie_comment_form = MovieCommentForm()
+    movie_comments = movie.moviecomment_set.all()
+    user_movie_score = request.user.userscore_set.filter(user=request.user)
+    context = {
+        'movie': movie,
+        'user_score_form': user_score_form,
+        'movie_comment_form': movie_comment_form,
+        'movie_comments': movie_comments,
+        'user_movie_score': user_movie_score,
+    }
+    return render(request, 'movies/detail.html', context)
+
+
+@require_POST
+def movie_create_comment(request, movie_pk):
+    movie = get_object_or_404(Movie, pk=movie_pk)
+    movie_comment_form = MovieCommentForm(request.POST)
+    if movie_comment_form.is_valid():
+        movie_comment = movie_comment_form.save(commit=False)
+        movie_comment.movie = movie
+        movie_comment.user = request.user
+        movie_comment.save()
+        return redirect('movies:detail', movie.pk)
+
+    context = {
+        'movie': movie,
+        'movie_comment_form': movie_comment_form,
+    }
+    return render(request, 'movies:detail.html', context)
+
+
+@require_POST
+def movie_delete_comment(request, movie_pk, comment_pk):
+    movie_comment = get_object_or_404(MovieComment, pk=comment_pk)
+    movie_comment.delete()
+    return redirect('movies:detail', movie_pk)
+
+
+def save_user_score(request, movie_pk):
+    # 해당 영화에 평점을 남긴것만 반영되어야 하는데 모든 영화에 반영됨....
+    movie = get_object_or_404(Movie, pk=movie_pk)
+    # 이미 평가한 유저이면 수정 아니면 생성
+    cur_eval_user = list(UserScore.objects.all().values('user'))
+    # print(cur_eval_user)
+    # print(request.user.id)
+    user_score_form = UserScoreForm(request.POST)
+    if user_score_form.is_valid():
+        user_score = user_score_form.save(commit=False)
+        user_score.user = request.user
+        user_score.movie_id = movie.movie_id
+
+        # 이미 평가한 유저인지 처음 평가한 유저인지에 따라 분기
+        for i in range(len(cur_eval_user)):
+            if cur_eval_user[i]['user'] == request.user.id:
+                cur_user_score = get_object_or_404(UserScore, user=request.user)
+                cur_user_score.score = user_score.score
+                cur_user_score.save()
+                break
+        else:
+            user_score.save()
+
+
+        # user_score.score가 4점 이상이면 userfavorite에 해당 영화 정보 저장
+
+        return redirect('movies:detail', movie.pk)
+
+    context = {
+        'movie': movie,
+        'user_score_form': user_score_form,
+    }
+    return render(request, 'movies:detail.html', context)
+
+
+@require_POST
+def delete_user_score(request, movie_pk):
+    user_movie_score = request.user.userscore_set.filter(user=request.user)
+    user_movie_score.delete()
+    
+    return redirect('movies:detail', movie_pk)
+    
+
 
 
 def similar(request, movie_pk):

@@ -1,21 +1,19 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
-  <div class="media">
+  <div class="media mt-5">
     {% if person.image %}
       <img src="{{ person.image.url }}" alt="{{ person.image }}" class="align-self-center mr-3 rounded-circle border border-warning mt-4">
     {% else %}
       <img width=150px height=150px src="{% static 'accounts/profile.png' %}" class="align-self-center mr-3 rounded-circle border border-warning mt-4" alt="profile">
     {% endif %}
     <div class="media-body">
-      <h1 class="mt-4">{{ person.nickname }}</h1>
-      {% comment %}
+      <h1 class="mt-4 text-white">{{ person.nickname }}</h1>
+      <p class="mb-0 text-white">{{ person.selfpr }}</p>
       <p>{% include 'accounts/_follow.html' %}</p>
-      {% endcomment %}
-      <p class="mb-0">{{ person.selfpr }}</p>
     </div>
   </div>
-  <p class="mt-3 ml-4"><a href="{% url 'accounts:update' person.pk %}">회원정보수정</a></p>
+  <p class="mt-3 ml-4"><a class="text-decoration-none text-white"href="{% url 'accounts:update' person.pk %}">회원정보수정</a></p>
   <hr>
   <ul class="list-group">
     <li class="list-group-item list-group-item-info">{{ person.username }}이 작성한 리뷰</li>

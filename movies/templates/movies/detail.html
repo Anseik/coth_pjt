@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+{% load bootstrap4 %}
+{% block content %}
+  <!-- 본문-->
+  <div class="text-center text-white mt-5">
+    <h1>상세보기</h1>
+    <h2>{{ movie.title }}</h2>
+    <img class="w-25" src="http://image.tmdb.org/t/p/w185/{{ movie.poster_path }}" alt="">
+    {% comment %} 유튜브 API를 통해 iframe 동영상 넣을 자리 {% endcomment %}
+    <hr>
+    <h4>줄거리</h4>
+    <h5>{{ movie.overview }}</h5>
+    <h6>개봉 날짜 : {{ movie.release_date }}</h6>
+  </div>
+
+  <!-- 평점 -->
+  <div class="mb-5">
+    <!-- 평점 매기기 -->
+    <form class="form text-white" action="{% url 'movies:save_user_score' movie.pk %}" method="POST">
+      {% csrf_token %}
+      {% bootstrap_form user_score_form %}
+      {% buttons %}
+        <button type="submit" class="btn btn-secondary">
+          {% if user_movie_score %}
+            평점 수정
+          {% else %}
+            평점 주기
+          {% endif %}
+        </button>
+      {% endbuttons %}
+    </form>
+
+    <!-- 평점 보여주기 -->
+    {% if user_movie_score %}
+      {% for user_score in user_movie_score %}
+        <p class="text-white">내가 준 평점 : {{ user_score.score }}</p>
+        <form class="" action="{% url 'movies:delete_user_score' movie.pk %}" method="POST">
+        {% csrf_token %}
+          <button class="btn btn-sm btn-danger">평점 삭제</button>
+        </form>
+      {% endfor %}
+    {% endif %}
+  </div>
+
+  <!-- 댓글 작성-->
+  <div>
+    <form class="form text-white" action="{% url 'movies:movie_create_comment' movie.pk %}" method="POST">
+      {% csrf_token %}
+      {% bootstrap_form movie_comment_form %}
+      {% buttons %}
+        <button type="submit" class="btn btn-secondary">
+          댓글작성
+        </button>
+      {% endbuttons %}
+    </form>
+  </div>
+
+  <!-- 댓글 보여주기-->
+  <h4 class="mb-3 text-white">Comment</h4>
+  <div class="mb-5">
+    {% for movie_comment in movie_comments %}
+      <ul class="list-group pl-0">
+        <div class="list-group-item d-flex justify-content-between">
+          <div>
+            <li class="mb-2">{{movie_comment.user}}: {{ movie_comment.content }}</li>
+            <li class="">생성 : {{ movie_comment.created_at }} | 수정 : {{ movie_comment.created_at }}</li>
+          </div>
+          <div>
+            {% if request.user == movie_comment.user %}
+              <form class="mt-3" action="{% url 'movies:movie_delete_comment' movie.pk movie_comment.pk %}" method="POST">
+                {% csrf_token %}
+                <button class="btn btn-sm btn-secondary">삭제</button>
+              </form>
+            {% endif %}
+          </div>
+        </div>
+      </ul>
+    {% endfor %}
+  </div>
+{% endblock  %}

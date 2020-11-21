@@ -48,7 +48,9 @@ class ReviewComment(models.Model):
     review_article = models.ForeignKey(ReviewArticle, on_delete=models.CASCADE)
     # 대댓글 기능 구현
 
-    content = models.CharField(max_length=100) 
+    content = models.CharField(max_length=100)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return self.content
@@ -59,7 +61,9 @@ class TalkComment(models.Model):
     talk_article = models.ForeignKey(TalkArticle, on_delete=models.CASCADE)
     # 대댓글 기능 구현
 
-    content = models.CharField(max_length=100) 
+    content = models.CharField(max_length=100)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return self.content

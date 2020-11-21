@@ -1,4 +1,5 @@
 from django.db import models
+from django.conf import settings
 
 # Create your models here.
 class Movie(models.Model):
@@ -16,22 +17,25 @@ class Movie(models.Model):
     release_date = models.TextField()
 
 
-class MovieInfo(models.Model):
-    genres = models.TextField()
-    rank_average = models.IntegerField()
+class UserScore(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    movie_id = models.IntegerField()
     
-    class Rank(models.IntegerChoices):
+    class Score(models.IntegerChoices):
         BEST = 5
         GOOD = 4
         NORMAL = 3
         BAD = 2
         WORST = 1
 
-    rank = models.IntegerField(choices=Rank.choices)
+    score = models.IntegerField(choices=Score.choices)
 
 
 class MovieComment(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     movie = models.ForeignKey(Movie, on_delete=models.CASCADE)
     content = models.CharField(max_length=100)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
     
     

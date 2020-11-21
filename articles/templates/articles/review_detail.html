@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load bootstrap4 %}
 {% block content %}
-  <div class="mb-5">
+  <div class="my-5 text-white">
     <h1>Review Detail</h1>
     <a class="btn btn-primary" href="{% url 'articles:review_index' %}">목록</a>
     {% if request.user == review.user %}
@@ -64,7 +64,7 @@
   <!-- 댓글 작성 -->
   {% if request.user.is_authenticated %}
     <div>
-      <form class="form" action="{% url 'articles:review_create_comment' review.pk %}" method="POST">
+      <form class="form text-white" action="{% url 'articles:review_create_comment' review.pk %}" method="POST">
         {% csrf_token %}
         {% bootstrap_form review_comment_form %}
         {% buttons %}
@@ -76,18 +76,23 @@
     </div>
   {% endif %}
   <!-- 댓글 보여주기 -->
-  <h4 class="mb-3">Comment</h4>
+  <h4 class="mb-3 text-white">Comment</h4>
   <div class="mb-5">
     {% for review_comment in review_comments %}
       <ul class="list-group pl-0">
         <div class="list-group-item d-flex justify-content-between">
-          <li class="d-inline">{{review_comment.user}}: {{ review_comment.content }}</li>
-          {% if request.user == review_comment.user %}
-            <form class="d-inline" action="{% url 'articles:review_delete_comment' review.pk review_comment.pk %}" method="POST">
-              {% csrf_token %}
-              <button class="btn btn-sm btn-secondary">삭제</button>
-            </form>
-          {% endif %}
+          <div>
+            <li class="mb-2">{{review_comment.user}}: {{ review_comment.content }}</li>
+            <li class="">생성 : {{ review_comment.created_at }} | 수정 : {{ review_comment.created_at }}</li>
+          </div>
+          <div>
+            {% if request.user == review_comment.user %}
+              <form class="mt-3" action="{% url 'articles:review_delete_comment' review.pk review_comment.pk %}" method="POST">
+                {% csrf_token %}
+                <button class="btn btn-sm btn-secondary">삭제</button>
+              </form>
+            {% endif %}
+          </div>
         </div>
       </ul>
     {% endfor %}

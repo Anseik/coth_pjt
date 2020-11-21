@@ -1,11 +1,11 @@
 {% extends 'base.html' %}
 {% load bootstrap4 %}
 {% block content %}
-  <form action="" method="POST" class="form" enctype="multipart/form-data">
+  <form action="" method="POST" class="form text-white mt-5" enctype="multipart/form-data">
     {% csrf_token %}
     {% bootstrap_form form %}
     {% buttons %}
-      <button type="submit" class="btn btn-info">
+      <button type="submit" class="btn btn-danger">
         작성
       </button>
     {% endbuttons %}

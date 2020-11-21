@@ -102,3 +102,24 @@ def profile(request, user_pk):
         'person': person,
     }
     return render(request, 'accounts/profile.html', context)
+
+
+@require_POST
+def follow(request, user_pk):
+    if request.user.is_authenticated:
+        person = get_object_or_404(get_user_model(), pk=user_pk)
+        user = request.user
+        if person != user:
+            if person.followers.filter(pk=user.pk).exists():
+                person.followers.remove(user)
+                follow = False
+            else:
+                person.followers.add(user)
+                follow = True
+            context = {
+                'follow': follow,
+                'followings_cnt': person.followings.count(),
+                'followers_cnt': person.followers.count(),
+            }
+            return JsonResponse(context)
+    return redirect('accounts:profile', person.username)
