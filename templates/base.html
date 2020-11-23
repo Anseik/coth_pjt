@@ -13,6 +13,13 @@
   <link rel="stylesheet" type="text/css" href="{% static './src/stylesheets/main.css' %}">
   <link rel="stylesheet" type="text/css" href="{% static './src/stylesheets/mozaic.css' %}">
   <title>Base</title>
+  <style type="text/css">
+  .select li:hover{
+    font-weight: bold;
+    font-size: 16px;
+    color: #f05d23;
+  }
+  </style>  
 </head>
 <body>
   <!-- 네브바 -->
@@ -28,12 +35,14 @@
             <span class="navbar-toggler-icon text-light" style="">+</span>
           </button>
           <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="main_nav navbar-nav">
+            <ul class="main_nav navbar-nav select">
                 <li class="main_nav_tab nav-item"><a class="text-reset text-decoration-none" href="{% url 'movies:index' %}">홈</a></li>
                 <li class="main_nav_tab nav-item"><a class="text-reset text-decoration-none" href="{% url 'articles:review_index' %}">영화 리뷰</a></li>
                 <li class="main_nav_tab nav-item"><a class="text-reset text-decoration-none" href="{% url 'articles:talk_index' %}">자유게시판</a></li>
-                <li class="main_nav_tab nav-item">내가 찜한 콘텐츠</li>
                 <li class="main_nav_tab nav-item">최신 콘텐츠</li>
+                {% if request.user.is_authenticated %}
+                  <li class="main_nav_tab nav-item"><a class="text-reset text-decoration-none" href="{% url 'movies:mydibs_movie' request.user.pk %}">내가 찜한 콘텐츠</a></li>
+                {% endif %}
                 {% if request.user.is_superuser %}
                   <li class="main_nav_tab nav-item">
                     <form class="d-inline" action="{% url 'movies:savedata' %}" method="POST">

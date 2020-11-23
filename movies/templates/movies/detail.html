@@ -14,45 +14,56 @@
   </div>
 
   <!-- 평점 -->
-  <div class="mb-5">
+  <div class="mt-5 mb-3 text-white">
     <!-- 평점 매기기 -->
-    <form class="form text-white" action="{% url 'movies:save_user_score' movie.pk %}" method="POST">
-      {% csrf_token %}
-      {% bootstrap_form user_score_form %}
-      {% buttons %}
-        <button type="submit" class="btn btn-secondary">
-          {% if user_movie_score %}
-            평점 수정
-          {% else %}
-            평점 주기
-          {% endif %}
-        </button>
-      {% endbuttons %}
-    </form>
+    {% if request.user.is_authenticated %}
+      <form class="form text-white" action="{% url 'movies:save_user_score' movie.pk %}" method="POST">
+        {% csrf_token %}
+        {% bootstrap_form user_score_form %}
+        {% buttons %}
+          <button type="submit" class="btn btn-secondary">
+            {% if user_movie_score %}
+              평점 수정
+            {% else %}
+              평점 주기
+            {% endif %}
+          </button>
+        {% endbuttons %}
+      </form>
+    {% else %}
+      <p>로그인하면 평점을 매길 수 있습니다.</p>
+    {% endif %}
 
     <!-- 평점 보여주기 -->
-    {% if user_movie_score %}
-      {% for user_score in user_movie_score %}
-        <p class="text-white">내가 준 평점 : {{ user_score.score }}</p>
-        <form class="" action="{% url 'movies:delete_user_score' movie.pk %}" method="POST">
-        {% csrf_token %}
-          <button class="btn btn-sm btn-danger">평점 삭제</button>
-        </form>
-      {% endfor %}
+    {% if request.user.is_authenticated %}
+      {% if user_movie_score %}
+        {% for user_score in user_movie_score %}
+          <p class="text-white">내가 준 평점 : {{ user_score.score }}</p>
+          <form class="" action="{% url 'movies:delete_user_score' movie.pk %}" method="POST">
+          {% csrf_token %}
+            <button class="btn btn-sm btn-danger">평점 삭제</button>
+          </form>
+        {% endfor %}
+      {% endif %}  
     {% endif %}
   </div>
 
   <!-- 댓글 작성-->
-  <div>
-    <form class="form text-white" action="{% url 'movies:movie_create_comment' movie.pk %}" method="POST">
-      {% csrf_token %}
-      {% bootstrap_form movie_comment_form %}
-      {% buttons %}
-        <button type="submit" class="btn btn-secondary">
-          댓글작성
-        </button>
-      {% endbuttons %}
-    </form>
+  
+  <div class="text-white">
+    {% if request.user.is_authenticated %}
+      <form class="form text-white" action="{% url 'movies:movie_create_comment' movie.pk %}" method="POST">
+        {% csrf_token %}
+        {% bootstrap_form movie_comment_form %}
+        {% buttons %}
+          <button type="submit" class="btn btn-secondary">
+            댓글작성
+          </button>
+        {% endbuttons %}
+      </form>
+    {% else %}
+      <p>로그인하면 댓글을 남길 수 있습니다.</p>
+    {% endif %}
   </div>
 
   <!-- 댓글 보여주기-->

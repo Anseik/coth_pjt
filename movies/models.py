@@ -19,7 +19,8 @@ class Movie(models.Model):
 
 class UserScore(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    movie_id = models.IntegerField()
+    movie = models.ForeignKey(Movie, on_delete=models.CASCADE)
+    movie_origin_id = models.IntegerField()
     
     class Score(models.IntegerChoices):
         BEST = 5

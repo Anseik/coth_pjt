@@ -16,5 +16,9 @@ urlpatterns = [
     # 추천 알고리즘
     path('saveuserscore/<int:movie_pk>/', views.save_user_score, name="save_user_score"),
     path('deluserscore/<int:movie_pk>/', views.delete_user_score, name="delete_user_score"),
-    path('similar/<int:movie_pk>/', views.similar, name="similar"),
+    # path('similar/<int:movie_pk>/', views.similar, name="similar"),
+
+    # ajax 요청
+    path('<int:movie_pk>/dibs/', views.dibs_movie, name="dibs_movie"),
+    path('<int:user_pk>/mydibs/', views.mydibs_movie, name="mydibs_movie"),
 ]

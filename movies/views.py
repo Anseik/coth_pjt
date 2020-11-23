@@ -8,6 +8,8 @@ from accounts.models import User, UserFavoriteMovie, UserSimilarMovie
 
 from .forms import MovieCommentForm, UserScoreForm
 
+from django.http import JsonResponse
+
 # Create your views here.
 @require_POST
 def savedata(request):
@@ -93,12 +95,25 @@ def deletedata(request):
 
 
 def index(request):
+    user = request.user
     movies = Movie.objects.all()
     top_movies = Movie.objects.order_by('-vote_average')[:10]
+    if request.user.is_authenticated:
+        similar_movies = user.usersimilarmovie_set.all().order_by('-vote_average')[:10]
+        # print(similar_movies)
+        # 아직 평점을 매긴적이 없어 비슷한 취향 영화정보가 없으면(수정 전)
+        if len(similar_movies) == 0:
+            similar_movies = Movie.objects.order_by('-vote_average')[:10]
+    else:
+        # 로그인된 유저가 아니면
+        similar_movies = Movie.objects.order_by('-vote_average')[:10]
+    date_movies  = Movie.objects.order_by('-release_date')[:10]
 
     context = {
         'movies': movies,
         'top_movies': top_movies,
+        'similar_movies': similar_movies,
+        'date_movies': date_movies,
     }
     return render(request, 'movies/index.html', context)
 
@@ -109,7 +124,10 @@ def detail(request, movie_pk):
     user_score_form = UserScoreForm()
     movie_comment_form = MovieCommentForm()
     movie_comments = movie.moviecomment_set.all()
-    user_movie_score = request.user.userscore_set.filter(user=request.user)
+    if request.user.is_authenticated:
+        user_movie_score = request.user.userscore_set.filter(user=request.user).filter(movie_origin_id=movie.movie_id)
+    else:
+        user_movie_score = []            
     context = {
         'movie': movie,
         'user_score_form': user_score_form,
@@ -122,46 +140,52 @@ def detail(request, movie_pk):
 
 @require_POST
 def movie_create_comment(request, movie_pk):
-    movie = get_object_or_404(Movie, pk=movie_pk)
-    movie_comment_form = MovieCommentForm(request.POST)
-    if movie_comment_form.is_valid():
-        movie_comment = movie_comment_form.save(commit=False)
-        movie_comment.movie = movie
-        movie_comment.user = request.user
-        movie_comment.save()
-        return redirect('movies:detail', movie.pk)
+    if request.user.is_authenticated:
+        movie = get_object_or_404(Movie, pk=movie_pk)
+        movie_comment_form = MovieCommentForm(request.POST)
+        if movie_comment_form.is_valid():
+            movie_comment = movie_comment_form.save(commit=False)
+            movie_comment.movie = movie
+            movie_comment.user = request.user
+            movie_comment.save()
+            return redirect('movies:detail', movie.pk)
 
-    context = {
-        'movie': movie,
-        'movie_comment_form': movie_comment_form,
-    }
-    return render(request, 'movies:detail.html', context)
+        context = {
+            'movie': movie,
+            'movie_comment_form': movie_comment_form,
+        }
+        return render(request, 'movies:detail.html', context)
+    else:
+        return redirect('accounts:login')
 
 
 @require_POST
 def movie_delete_comment(request, movie_pk, comment_pk):
     movie_comment = get_object_or_404(MovieComment, pk=comment_pk)
-    movie_comment.delete()
+    if request.user == movie_comment.user:
+        movie_comment.delete()
     return redirect('movies:detail', movie_pk)
 
 
+
 def save_user_score(request, movie_pk):
-    # 해당 영화에 평점을 남긴것만 반영되어야 하는데 모든 영화에 반영됨....
     movie = get_object_or_404(Movie, pk=movie_pk)
     # 이미 평가한 유저이면 수정 아니면 생성
-    cur_eval_user = list(UserScore.objects.all().values('user'))
+    cur_eval_user = list(UserScore.objects.filter(movie_origin_id=movie.movie_id).values('user'))
     # print(cur_eval_user)
     # print(request.user.id)
     user_score_form = UserScoreForm(request.POST)
     if user_score_form.is_valid():
         user_score = user_score_form.save(commit=False)
         user_score.user = request.user
-        user_score.movie_id = movie.movie_id
+        user_score.movie = movie
+        user_score.movie_origin_id = movie.movie_id
 
         # 이미 평가한 유저인지 처음 평가한 유저인지에 따라 분기
         for i in range(len(cur_eval_user)):
             if cur_eval_user[i]['user'] == request.user.id:
-                cur_user_score = get_object_or_404(UserScore, user=request.user)
+                cur_user_score = get_object_or_404(UserScore, user=request.user, movie_origin_id=movie.movie_id)
+                # print(cur_user_score)
                 cur_user_score.score = user_score.score
                 cur_user_score.save()
                 break
@@ -170,7 +194,9 @@ def save_user_score(request, movie_pk):
 
 
         # user_score.score가 4점 이상이면 userfavorite에 해당 영화 정보 저장
-
+        if user_score.score >= 4:
+            similar(request, movie_pk)
+        
         return redirect('movies:detail', movie.pk)
 
     context = {
@@ -182,13 +208,12 @@ def save_user_score(request, movie_pk):
 
 @require_POST
 def delete_user_score(request, movie_pk):
-    user_movie_score = request.user.userscore_set.filter(user=request.user)
+    movie = get_object_or_404(Movie, pk=movie_pk)
+    user_movie_score = request.user.userscore_set.filter(user=request.user).filter(movie_origin_id=movie.movie_id)
     user_movie_score.delete()
     
     return redirect('movies:detail', movie_pk)
     
-
-
 
 def similar(request, movie_pk):
     user = request.user
@@ -207,7 +232,7 @@ def similar(request, movie_pk):
     similar_movies_dict = response.json()
     # print(similar_movies_dict)
 
-    result = sorted(similar_movies_dict['results'], key=lambda x: -x['vote_average'])[:5]
+    result = sorted(similar_movies_dict['results'], key=lambda x: -x['vote_average'])[:10]
     # print(result)
 
     for i in range(len(result)):
@@ -237,6 +262,46 @@ def similar(request, movie_pk):
             usersimilarmovie.save()
 
     return redirect('movies:index')
+
+
+@require_POST
+def dibs_movie(request, movie_pk):
+    if request.user.is_authenticated:
+        movie = get_object_or_404(Movie, pk=movie_pk)
+        user = request.user
+
+        if movie.dibs_users.filter(pk=user.pk).exists():
+        # if user in article.like_users.all():
+            movie.dibs_users.remove(user)
+            dibed = False
+        else:
+            movie.dibs_users.add(user)
+            dibed = True
+            
+        count = movie.dibs_users.count()
+
+        context = {
+            'dibed': dibed,
+            'count': count,
+        }
+
+        return JsonResponse(context)
+    return redirect('accounts:login')
+
+
+def mydibs_movie(request, user_pk):
+    if request.user.is_authenticated:
+        user = request.user
+        mydibs_movies = user.dibs_movies.all()
+        # print(mydibs_movies)
+
+        context = {
+            'mydibs_movies': mydibs_movies,
+        }
+
+        return render(request, 'movies/mydibs_movies.html', context)
+    return redirect('accounts:login')
+
     
 
 

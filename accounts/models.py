@@ -5,6 +5,8 @@ from imagekit.processors import Thumbnail
 
 from django.conf import settings
 
+from movies.models import Movie
+
 # Create your models here.
 class User(AbstractUser):
     followers = models.ManyToManyField('self', symmetrical=False, related_name='followings')
@@ -15,6 +17,7 @@ class User(AbstractUser):
                                 upload_to='%Y/%m/%d')
     selfpr = models.CharField(max_length=100)
     nickname = models.CharField(max_length=20)
+    dibs_movies = models.ManyToManyField(Movie, related_name='dibs_users', blank=True, null=True)
 
 
 class UserFavoriteMovie(models.Model):
