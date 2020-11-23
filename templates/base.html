@@ -39,7 +39,7 @@
                 <li class="main_nav_tab nav-item"><a class="text-reset text-decoration-none" href="{% url 'movies:index' %}">홈</a></li>
                 <li class="main_nav_tab nav-item"><a class="text-reset text-decoration-none" href="{% url 'articles:review_index' %}">영화 리뷰</a></li>
                 <li class="main_nav_tab nav-item"><a class="text-reset text-decoration-none" href="{% url 'articles:talk_index' %}">자유게시판</a></li>
-                <li class="main_nav_tab nav-item">최신 콘텐츠</li>
+                <li class="main_nav_tab nav-item"><a class="text-reset text-decoration-none" href="{% url 'movies:new_movies' %}">최신 콘텐츠</a></li>
                 {% if request.user.is_authenticated %}
                   <li class="main_nav_tab nav-item"><a class="text-reset text-decoration-none" href="{% url 'movies:mydibs_movie' request.user.pk %}">내가 찜한 콘텐츠</a></li>
                 {% endif %}

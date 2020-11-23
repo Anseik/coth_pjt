@@ -94,28 +94,47 @@ def deletedata(request):
     return redirect('movies:index')
 
 
+@require_GET
 def index(request):
     user = request.user
     movies = Movie.objects.all()
-    top_movies = Movie.objects.order_by('-vote_average')[:10]
+    top_movies = Movie.objects.order_by('-vote_average')[:10] # top10
+    date_movies  = Movie.objects.order_by('-release_date')[:10] # 최신영화
+
+    # 로그인된 유저일 경우 4개 추가
     if request.user.is_authenticated:
         similar_movies = user.usersimilarmovie_set.all().order_by('-vote_average')[:10]
-        # print(similar_movies)
-        # 아직 평점을 매긴적이 없어 비슷한 취향 영화정보가 없으면(수정 전)
-        if len(similar_movies) == 0:
-            similar_movies = Movie.objects.order_by('-vote_average')[:10]
-    else:
-        # 로그인된 유저가 아니면
-        similar_movies = Movie.objects.order_by('-vote_average')[:10]
-    date_movies  = Movie.objects.order_by('-release_date')[:10]
+        popularity_movies = Movie.objects.order_by('-popularity')[:10]
+        dibs_movies = user.dibs_movies.order_by('-vote_average')[:10]
+        vote_count_movies = Movie.objects.order_by('-vote_count')[:10]
 
-    context = {
-        'movies': movies,
-        'top_movies': top_movies,
-        'similar_movies': similar_movies,
-        'date_movies': date_movies,
-    }
-    return render(request, 'movies/index.html', context)
+        context = {
+            'movies': movies,
+            'date_movies': date_movies,
+            'top_movies': top_movies,
+            'similar_movies': similar_movies,
+            'popularity_movies': popularity_movies,
+            'dibs_movies': dibs_movies,
+            'vote_count_movies': vote_count_movies,
+        }
+        return render(request, 'movies/index.html', context)        
+
+    # 로그인하지 않은 유저일 경우 2개 추가
+    else:
+        popularity_movies = Movie.objects.order_by('-popularity')[:10]
+        vote_count_movies = Movie.objects.order_by('-vote_count')[:10]
+
+        context = {
+            'movies': movies,
+            'date_movies': date_movies,
+            'top_movies': top_movies,
+            'popularity_movies': popularity_movies,
+            'vote_count_movies': vote_count_movies,
+        }
+        return render(request, 'movies/index.html', context)          
+
+
+
 
 
 @require_GET
@@ -289,6 +308,7 @@ def dibs_movie(request, movie_pk):
     return redirect('accounts:login')
 
 
+@require_GET
 def mydibs_movie(request, user_pk):
     if request.user.is_authenticated:
         user = request.user
@@ -301,6 +321,17 @@ def mydibs_movie(request, user_pk):
 
         return render(request, 'movies/mydibs_movies.html', context)
     return redirect('accounts:login')
+
+
+@require_GET
+def new_movies(request):
+    new_movies = Movie.objects.order_by('-release_date')[:20]
+
+    context = {
+        'new_movies': new_movies,
+    }
+
+    return render(request, 'movies/new_movies.html', context)
 
     
 

@@ -46,90 +46,160 @@
       </div>
     </div>
 
-    <!-- 당신 취향 영화 -->
+    <!-- 취향 저격 / 취향이 확인안되면 popularity를 기준으로 영화 추천 -->
     <div class="d-inline-block mt-5 pt-5">
-      <h3 class="text-center text-white">당신 취향</h3>
-      <div id="similar10" class="carousel slide" data-ride="carousel">
-        <ol class="carousel-indicators">
-          <li data-target="#similar10" data-slide-to="0" class="active"></li>
-          <li data-target="#similar10" data-slide-to="1"></li>
-          <li data-target="#similar10" data-slide-to="2"></li>
-          <li data-target="#similar10" data-slide-to="3"></li>
-          <li data-target="#similar10" data-slide-to="4"></li>
-          <li data-target="#similar10" data-slide-to="5"></li>
-          <li data-target="#similar10" data-slide-to="6"></li>
-          <li data-target="#similar10" data-slide-to="7"></li>
-          <li data-target="#similar10" data-slide-to="8"></li>
-          <li data-target="#similar10" data-slide-to="9"></li>
-        </ol>
-        <div class="carousel-inner">
-          {% for similar_movie in similar_movies %}
-            {% if forloop.first %}
-            <div class="carousel-item active">
-            {% else %}
-            <div class="carousel-item">
-            {% endif %}
-              <img src="http://image.tmdb.org/t/p/w185/{{ similar_movie.poster_path }}" class="d-block w-100" alt="...">
-              <div class="carousel-caption d-none d-md-block">
-                <h5>{{ similar_movie.title }}</h5>
-                <p>평점 : {{ similar_movie.vote_average}}</p>
+      {% if request.user.is_authenticated and similar_movies|length %}
+        <h3 class="text-center text-white">취향 저격</h3>
+        <div id="similar10" class="carousel slide" data-ride="carousel">
+          <ol class="carousel-indicators">
+            {% for similar_movie in similar_movies  %}
+              {% if forloop.first %}
+                <li data-target="#similar10" data-slide-to="{{ forloop.counter }}" class="active"></li>
+              {% else %}
+                <li data-target="#similar10" data-slide-to="{{ forloop.counter }}"></li>
+              {% endif %}
+            {% endfor %}
+          </ol>
+          <div class="carousel-inner">
+            {% for similar_movie in similar_movies %}
+              {% if forloop.first %}
+              <div class="carousel-item active">
+              {% else %}
+              <div class="carousel-item">
+              {% endif %}
+                <img src="http://image.tmdb.org/t/p/w185/{{ similar_movie.poster_path }}" class="d-block w-100" alt="...">
+                <div class="carousel-caption d-none d-md-block">
+                  <h5>{{ similar_movie.title }}</h5>
+                  <p>평점 : {{ similar_movie.vote_average}}</p>
+                </div>
               </div>
-            </div>
-          {% endfor %}
-        </div>
-        <a class="carousel-control-prev" href="#similar10" role="button" data-slide="prev">
-          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-          <span class="sr-only">Previous</span>
-        </a>
-        <a class="carousel-control-next" href="#similar10" role="button" data-slide="next">
-          <span class="carousel-control-next-icon" aria-hidden="true"></span>
-          <span class="sr-only">Next</span>
-        </a>
-      </div>
+            {% endfor %}
+          </div>
+          <a class="carousel-control-prev" href="#similar10" role="button" data-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+          </a>
+          <a class="carousel-control-next" href="#similar10" role="button" data-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+          </a>
+        </div>          
+      {% else %}
+        <h3 class="text-center text-white">추천 영화</h3>
+        <div id="popularity10" class="carousel slide" data-ride="carousel">
+          <ol class="carousel-indicators">
+            {% for popularity_movie in popularity_movies  %}
+              {% if forloop.first %}
+                <li data-target="#popularity10" data-slide-to="{{ forloop.counter }}" class="active"></li>
+              {% else %}
+                <li data-target="#popularity10" data-slide-to="{{ forloop.counter }}"></li>
+              {% endif %}
+            {% endfor %}
+          </ol>
+          <div class="carousel-inner">
+            {% for popularity_movie in popularity_movies %}
+              {% if forloop.first %}
+              <div class="carousel-item active">
+              {% else %}
+              <div class="carousel-item">
+              {% endif %}
+                <img src="http://image.tmdb.org/t/p/w185/{{ popularity_movie.poster_path }}" class="d-block w-100" alt="...">
+                <div class="carousel-caption d-none d-md-block">
+                  <h5>{{ popularity_movie.title }}</h5>
+                  <p>평점 : {{ popularity_movie.vote_average}}</p>
+                </div>
+              </div>
+            {% endfor %}
+          </div>
+          <a class="carousel-control-prev" href="#popularity10" role="button" data-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+          </a>
+          <a class="carousel-control-next" href="#popularity10" role="button" data-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+          </a>
+        </div>           
+      {% endif %}
     </div>
 
-  
-  <!-- 찜한 콘텐츠(수정 전) -->
+
+  <!-- 찜한 콘텐츠(찜한 콘텐츠가 없으면 vote_count를 기준으로 추천) -->
 
     <div class="d-inline-block mt-5 pt-5">
-      <h3 class="text-center text-white">찜한 콘텐츠</h3>
-      <div id="top10" class="carousel slide" data-ride="carousel">
-        <ol class="carousel-indicators">
-          <li data-target="#top10" data-slide-to="0" class="active"></li>
-          <li data-target="#top10" data-slide-to="1"></li>
-          <li data-target="#top10" data-slide-to="2"></li>
-          <li data-target="#top10" data-slide-to="3"></li>
-          <li data-target="#top10" data-slide-to="4"></li>
-          <li data-target="#top10" data-slide-to="5"></li>
-          <li data-target="#top10" data-slide-to="6"></li>
-          <li data-target="#top10" data-slide-to="7"></li>
-          <li data-target="#top10" data-slide-to="8"></li>
-          <li data-target="#top10" data-slide-to="9"></li>
-        </ol>
-        <div class="carousel-inner">
-          {% for top_movie in top_movies %}
-            {% if forloop.first %}
-            <div class="carousel-item active">
-            {% else %}
-            <div class="carousel-item">
-            {% endif %}
-              <img src="http://image.tmdb.org/t/p/w185/{{ top_movie.poster_path }}" class="d-block w-100" alt="...">
-              <div class="carousel-caption d-none d-md-block">
-                <h5>{{ top_movie.title }}</h5>
-                <p>평점 : {{ top_movie.vote_average}}</p>
+      {% if request.user.is_authenticated and dibs_movies|length %}
+        <h3 class="text-center text-white">찜한 영화</h3>
+        <div id="dibs10" class="carousel slide" data-ride="carousel">
+          <ol class="carousel-indicators">
+            {% for dibs_movie in dibs_movies  %}
+              {% if forloop.first %}
+                <li data-target="#dibs10" data-slide-to="{{ forloop.counter }}" class="active"></li>
+              {% else %}
+                <li data-target="#dibs10" data-slide-to="{{ forloop.counter }}"></li>
+              {% endif %}
+            {% endfor %}
+          </ol>
+          <div class="carousel-inner">
+            {% for dibs_movie in dibs_movies %}
+              {% if forloop.first %}
+              <div class="carousel-item active">
+              {% else %}
+              <div class="carousel-item">
+              {% endif %}
+                <img src="http://image.tmdb.org/t/p/w185/{{ dibs_movie.poster_path }}" class="d-block w-100" alt="...">
+                <div class="carousel-caption d-none d-md-block">
+                  <h5>{{ dibs_movie.title }}</h5>
+                  <p>평점 : {{ dibs_movie.vote_average}}</p>
+                </div>
               </div>
-            </div>
-          {% endfor %}
-        </div>
-        <a class="carousel-control-prev" href="#top10" role="button" data-slide="prev">
-          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-          <span class="sr-only">Previous</span>
-        </a>
-        <a class="carousel-control-next" href="#top10" role="button" data-slide="next">
-          <span class="carousel-control-next-icon" aria-hidden="true"></span>
-          <span class="sr-only">Next</span>
-        </a>
-      </div>
+            {% endfor %}
+          </div>
+          <a class="carousel-control-prev" href="#dibs10" role="button" data-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+          </a>
+          <a class="carousel-control-next" href="#dibs10" role="button" data-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+          </a>
+        </div>          
+      {% else %}
+        <h3 class="text-center text-white">인기 영화</h3>
+        <div id="vote10" class="carousel slide" data-ride="carousel">
+          <ol class="carousel-indicators">
+            {% for vote_count_movie in vote_count_movies  %}
+              {% if forloop.first %}
+                <li data-target="#vote10" data-slide-to="{{ forloop.counter }}" class="active"></li>
+              {% else %}
+                <li data-target="#vote10" data-slide-to="{{ forloop.counter }}"></li>
+              {% endif %}
+            {% endfor %}
+          </ol>
+          <div class="carousel-inner">
+            {% for vote_count_movie in vote_count_movies %}
+              {% if forloop.first %}
+              <div class="carousel-item active">
+              {% else %}
+              <div class="carousel-item">
+              {% endif %}
+                <img src="http://image.tmdb.org/t/p/w185/{{ vote_count_movie.poster_path }}" class="d-block w-100" alt="...">
+                <div class="carousel-caption d-none d-md-block">
+                  <h5>{{ vote_count_movie.title }}</h5>
+                  <p>평점 : {{ vote_count_movie.vote_average}}</p>
+                </div>
+              </div>
+            {% endfor %}
+          </div>
+          <a class="carousel-control-prev" href="#vote10" role="button" data-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+          </a>
+          <a class="carousel-control-next" href="#vote10" role="button" data-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+          </a>
+        </div>           
+      {% endif %}
     </div>
 
   <!-- 최신 콘텐츠 -->
@@ -176,6 +246,7 @@
   </div>
 
   <!-- 영화 카드 -->
+  {% comment %} 영화를 장르별로 구분해서 보여주자!!!! 선호장르1, 선호장르2, 선호장르3 {% endcomment %}
     <h3 class="text-white mt-5">&ensp;&ensp;&ensp;#전체영화</h3><br>
     <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-4">
       {% for movie in movies %}
@@ -189,18 +260,20 @@
                 <div class="icons"><a href="#"><i class="ion-chatbubbles"></i></a>
                 <a href="{% url 'movies:detail' movie.pk %}">상세보기</a>
                 {% comment %} <i class="ion-person-add"></i> {% endcomment %}
-                <form id="dibs" method="POST" data-movie-pk="{{ movie.pk }}">
-                  {% csrf_token %}
-                  {% if request.user in movie.dibs_users.all %}
-                    <button class="btn btn-link d-block mx-auto">
-                      <i id="dibs-icon-{{ movie.pk }}" class="fas fa-save" style="color:green;"></i>
-                    </button>
-                  {% else %}
-                    <button class="btn btn-link d-block mx-auto">
-                      <i id="dibs-icon-{{ movie.pk }}" class="far fa-save" style="color:gray;"></i>
-                    </button>                  
-                  {% endif %}
-                </form>
+                {% if request.user.is_authenticated %}
+                  <form id="dibs" method="POST" data-movie-pk="{{ movie.pk }}">
+                    {% csrf_token %}
+                    {% if request.user in movie.dibs_users.all %}
+                      <button class="btn btn-link d-block mx-auto">
+                        <i id="dibs-icon-{{ movie.pk }}" class="fas fa-save" style="color:green;"></i>
+                      </button>
+                    {% else %}
+                      <button class="btn btn-link d-block mx-auto">
+                        <i id="dibs-icon-{{ movie.pk }}" class="far fa-save" style="color:gray;"></i>
+                      </button>                  
+                    {% endif %}
+                  </form>
+                {% endif %}
                 <p>
                   <span id="dibs-count-{{ movie.pk }}">
                     {{ movie.dibs_users.all|length }}명이 찜
