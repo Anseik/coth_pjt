@@ -1,0 +1,92 @@
+{% extends 'base.html' %}
+{% load bootstrap4 %}
+{% block content %}
+  <!-- 본문-->
+  <div class="text-center text-white my-5">
+    <h1 id="movie-title" class="mt-5 py-4">{{ movie.title }}</h1>
+    {% comment %} 유튜브 API를 통해 iframe 동영상 넣을 자리 {% endcomment %}
+    <div class="embed-responsive embed-responsive-16by9">
+      <iframe id="movie-iframe" class="embed-responsive-item" src="http://www.youtube.com/embed/{{videoId}}" allowfullscreen></iframe>
+    </div>
+    <div class="w-100 mx-0 row row-cols-1 row-cols-md-3">
+      <img class="p-4" src="http://image.tmdb.org/t/p/w185/{{ movie.poster_path }}" alt="">
+      <div class="d-flex flex-column justify-content-between p-4">
+        <h4>영화 정보</h4>
+        <div>장르 :
+          {% for genre_name in genres_name  %}
+            <span>{{ genre_name }}</span>
+          {% endfor %}
+        </div>
+        <h5>줄거리</h5>
+        <h6>{{ movie.overview }}</h5>
+        <hr>
+        <h6>평점 : {{ movie.vote_average }}</h6>
+        <h6>투표 수 : {{ movie.vote_count }}</h6>
+        <h6>개봉 날짜 : {{ movie.release_date }}</h6>
+        <h6>언어 : {{ movie.original_language }}</h6>
+        <h6>원작 제목 : {{ movie.original_title }}</h6>
+      </div>
+      <div class="p-4">
+        <h4>관련 영상</h4>
+        <ul class="list-unstyled">
+          <li class="text-left" id="li-0"><a id="a-0" class="text-white row" href=""><img class="col-4" id="img-0" src="" alt=""><span class="col-8 pt-2" id="span-0"></span></a></li>
+          <li class="text-left" id="li-1"><a id="a-1" class="text-white row" href=""><img class="col-4" id="img-1" src="" alt=""><span class="col-8 pt-2" id="span-1"></span></a></li>
+          <li class="text-left" id="li-2"><a id="a-2" class="text-white row" href=""><img class="col-4" id="img-2" src="" alt=""><span class="col-8 pt-2" id="span-2"></span></a></li>
+          <li class="text-left" id="li-3"><a id="a-3" class="text-white row" href=""><img class="col-4" id="img-3" src="" alt=""><span class="col-8 pt-2" id="span-3"></span></a></li>
+          <li class="text-left" id="li-4"><a id="a-4" class="text-white row" href=""><img class="col-4" id="img-4" src="" alt=""><span class="col-8 pt-2" id="span-4"></span></a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+{% endblock content %}
+
+{% block script %}
+  <script>
+    const API_URL = 'https://www.googleapis.com/youtube/v3/search'
+    const API_KEY = 'AIzaSyB7QKVrnkQW6uRuLg_iFBlRjMAAh9FNfHQ'
+    const movieTitle = document.querySelector('#movie-title').innerText + ' 예고편'
+    // console.log(movieTitle)
+    const headers = {
+      params: {
+        key: API_KEY,
+        part: 'snippet',
+        type: 'video',
+        q: movieTitle,
+      }
+    }
+
+    axios.get(API_URL, headers)
+      .then(res => {
+        // 예고편 보여주기
+        const videoId = res.data.items[0].id.videoId
+        // console.log(videoId)
+        const movieIframe = document.querySelector('#movie-iframe')
+        movieIframe.src = `http://www.youtube.com/embed/${videoId}`
+
+        // 관련 영상 목록 만들기
+
+        const videoList = res.data.items
+        videoList.forEach(function (video, idx) {
+          const VideoListId = video.id.videoId
+          // 이미지 넣기
+          const imgTag = document.querySelector(`#img-${idx}`)
+          imgTag.src = video.snippet.thumbnails.default.url
+
+          // 타이틀 넣기
+          const spanTag = document.querySelector(`#span-${idx}`)
+          const listTitle = _.unescape(video.snippet.title)
+          spanTag.innerText = listTitle
+
+          // 이벤트 추가 하기(관련 영상 클릭하면 위에서 재생할 수 있도록)
+          const aTag = document.querySelector(`#a-${idx}`)
+          aTag.addEventListener('click', function (event) {
+            event.preventDefault()
+            movieIframe.src = `http://www.youtube.com/embed/${VideoListId}`
+          })
+        })
+      })
+      .catch(err => {
+        console.log(err)
+      })
+  </script>
+{% endblock  %}

@@ -37,10 +37,11 @@
           <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="main_nav navbar-nav select">
                 <li class="main_nav_tab nav-item"><a class="text-reset text-decoration-none" href="{% url 'movies:index' %}">홈</a></li>
-                <li class="main_nav_tab nav-item"><a class="text-reset text-decoration-none" href="{% url 'articles:review_index' %}">영화 리뷰</a></li>
+                <li class="main_nav_tab nav-item"><a class="text-reset text-decoration-none" href="{% url 'articles:review_index' %}">사용자 리뷰</a></li>
                 <li class="main_nav_tab nav-item"><a class="text-reset text-decoration-none" href="{% url 'articles:talk_index' %}">자유게시판</a></li>
                 <li class="main_nav_tab nav-item"><a class="text-reset text-decoration-none" href="{% url 'movies:new_movies' %}">최신 콘텐츠</a></li>
                 {% if request.user.is_authenticated %}
+                  <li class="main_nav_tab nav-item"><a class="text-reset text-decoration-none" href="{% url 'movies:mytype_movie' %}">취향 저격</a></li>
                   <li class="main_nav_tab nav-item"><a class="text-reset text-decoration-none" href="{% url 'movies:mydibs_movie' request.user.pk %}">내가 찜한 콘텐츠</a></li>
                 {% endif %}
                 {% if request.user.is_superuser %}
@@ -56,23 +57,9 @@
                       <button class="btn text-light">데이터삭제</button>
                     </form>
                   </li>
-                  <li class="main_nav_tab nav-item">
-                    <form class="d-inline" action="{% url 'movies:save_genres' %}" method="POST">
-                      {% csrf_token %}
-                      <button class="btn text-light">장르갱신</button>
-                    </form>
-                  </li>
-                  <li class="main_nav_tab nav-item">
-                    <form class="d-inline" action="{% url 'movies:delete_genres' %}" method="POST">
-                      {% csrf_token %}
-                      <button class="btn text-light">장르삭제</button>
-                    </form>
-                  </li>
                 {% endif %}              
             </ul>
             <ul class="sub_nav navbar-nav">
-                <li class="sub_nav_tab nav-item"><i class="fas fa-search"></i> 검색</li>
-                <li class="sub_nav_tab nav-item"><i class="fas fa-bell"> 알림</i></li>
                 {% if request.user.is_authenticated %}
                   <li class="sub_nav_tab nav-item"><a class="text-reset text-decoration-none nav-link p-0" href="{% url 'accounts:profile' request.user.pk %}"><i class="fas fa-user"> {{ request.user.username }}</i></a></li>
                   <li class="sub_nav_tab nav-item"><a class="text-reset text-decoration-none nav-link p-0" href="{% url 'accounts:logout' %}"><i class="fas fa-sign-out-alt"></i> 로그아웃</a></li>

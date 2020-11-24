@@ -1,0 +1,101 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load static %}
+  <h1 class="text-white mt-5">#영화검색</h1>
+  <div class="text-white mt-5 d-flex justify-content-center">
+    <form class="w-75 d-flex justify-content-center">
+        <i class="fas fa-search fa-2x px-3"></i>
+        <input type="text" name="searchword" value="{{ searchword }}" placeholder=" 작품 제목 또는 줄거리로 검색" class="rounded w-75">
+    </form>  
+  </div>
+
+  {% if search_movies %}
+    <h3 class="text-white mt-5">&ensp;&ensp;&ensp;#검색결과</h3><br>
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-4 mb-5">
+      {% for movie in search_movies %}
+        <div class="d-flex justify-content-center">
+          <figure class="snip1436">
+            <img src="http://image.tmdb.org/t/p/w185/{{ movie.poster_path }}" alt="" />
+            <figcaption>
+                <h4>{{ movie.title }}</h4>
+                <p>평점 : {{ movie.vote_average }}</p>
+                <div class="icons"><a href="#"><i class="ion-chatbubbles"></i></a>
+                  <a href="{% url 'movies:detail' movie.pk %}">상세보기</a>
+                  {% if request.user.is_authenticated %}
+                    <form id="dibs" method="POST" data-movie-pk="{{ movie.pk }}">
+                      {% csrf_token %}
+                      {% if request.user in movie.dibs_users.all %}
+                        <button class="btn btn-link d-block mx-auto">
+                          <i id="dibs-icon-{{ movie.pk }}" class="fas fa-save" style="color:green;"></i>
+                        </button>
+                      {% else %}
+                        <button class="btn btn-link d-block mx-auto">
+                          <i id="dibs-icon-{{ movie.pk }}" class="far fa-save" style="color:gray;"></i>
+                        </button>                  
+                      {% endif %}
+                    </form>
+                  {% endif %}
+                  <p>
+                    <span id="dibs-count-{{ movie.pk }}">
+                      {{ movie.dibs_users.all|length }}명이 찜
+                    </span>
+                  </p>
+                </div>
+            </figcaption>
+          </figure>
+        </div>
+      {% endfor %}
+    </div>      
+  {% else %}
+    <h4 class="text-white text-center mt-5 pt-5">검색 결과가 없습니다.</h4>
+  {% endif %}
+{% endblock content %}
+
+{% block script %}
+  <script>
+    const forms = document.querySelectorAll('#dibs')
+    // console.log(dibs_btns)
+    
+    forms.forEach(function (form) {
+      form.addEventListener('submit', function (event) {
+        event.preventDefault()
+        // console.log('찜했다!!!!!')
+        // console.log(event.target)
+        const moviePk = event.target.dataset.moviePk
+        const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value
+        const headers = {
+          headers: {
+            'X-CSRFToken': csrftoken
+          },
+        }
+        axios.post(`/movies/${moviePk}/dibs/`, {}, headers)
+          .then(function (res) {
+            // console.log(res.data)
+            const dibed = res.data.dibed
+            console.log(dibed)
+            const count = res.data.count
+            console.log(count)
+            const dibsIcon = document.querySelector(`#dibs-icon-${moviePk}`)
+
+            if (dibed) {
+              dibsIcon.style.color = 'green'
+              dibsIcon.classList.remove('far')
+              dibsIcon.classList.add('fas')
+              alert('찜 완료.')
+            } else {
+              dibsIcon.style.color = 'gray'
+              dibsIcon.classList.remove('fas')
+              dibsIcon.classList.add('far')
+              alert('찜 취소.')
+            }
+
+            const dibscount = document.querySelector(`#dibs-count-${moviePk}`)
+            dibscount.innerText = `${count}명이 찜`
+          })
+          .catch(function (err) {
+            console.log(err)
+          })
+      })
+    })
+  </script>
+{% endblock %}

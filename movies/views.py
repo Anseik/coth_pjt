@@ -3,6 +3,7 @@ import json
 
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.decorators.http import require_http_methods, require_POST, require_GET
+from django.db.models import Q
 
 from .models import Movie, MovieComment, UserScore, Genre, MovieGenre
 from accounts.models import User, UserFavoriteMovie, UserSimilarMovie
@@ -189,7 +190,7 @@ def index(request):
 
     # 로그인된 유저일 경우
     if request.user.is_authenticated:
-        similar_movies = user.usersimilarmovie_set.all().order_by('-vote_average')[:10]
+        mytype_movies = user.usersimilarmovie_set.all().order_by('-vote_average')[:10]
         popularity_movies = Movie.objects.order_by('-popularity')[:10]
         dibs_movies = user.dibs_movies.order_by('-vote_average')[:10]
         vote_count_movies = Movie.objects.order_by('-vote_count')[:10]
@@ -213,7 +214,7 @@ def index(request):
             'movies': movies,
             'date_movies': date_movies,
             'top_movies': top_movies,
-            'similar_movies': similar_movies,
+            'mytype_movies': mytype_movies,
             'popularity_movies': popularity_movies,
             'dibs_movies': dibs_movies,
             'vote_count_movies': vote_count_movies,
@@ -239,9 +240,6 @@ def index(request):
             'vote_count_movies': vote_count_movies,
         }
         return render(request, 'movies/index.html', context)          
-
-
-
 
 
 @require_GET
@@ -399,6 +397,35 @@ def similar(request, movie_pk):
     return redirect('movies:index')
 
 
+@require_GET
+def mytype_movie(request):
+    if request.user.is_authenticated:
+        mytype_movies = request.user.usersimilarmovie_set.all()
+
+        context = {
+            'mytype_movies': mytype_movies,    
+        }
+        return render(request, 'movies/mytype.html', context)
+    return redirect('accounts:login')
+
+
+@require_GET
+def mytype_detail(request, movie_pk):
+    movie = get_object_or_404(UserSimilarMovie, pk=movie_pk)
+    genres = json.loads(movie.genre_ids)
+    # print(genres)
+    genres_name = []
+    for genre in genres:
+        genres_name.append(genre_dict[genre])
+    # print(genres_name)
+   
+    context = {
+        'movie': movie,
+        'genres_name': genres_name,
+    }
+    return render(request, 'movies/mytype_detail.html', context)
+
+
 @require_POST
 def dibs_movie(request, movie_pk):
     if request.user.is_authenticated:
@@ -448,6 +475,22 @@ def new_movies(request):
     }
 
     return render(request, 'movies/new_movies.html', context)
+
+
+@require_GET
+def search(request):
+    searchword = request.GET.get('searchword')
+    if not searchword:
+        search_movies = []
+    else:
+        search_movies = Movie.objects.filter(Q(title__icontains=searchword)|Q(overview__icontains=searchword))
+    
+    context = {
+        'search_movies': search_movies,
+    }
+
+    return render(request, 'movies/search.html', context)
+
 
     
 

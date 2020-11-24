@@ -15,6 +15,10 @@ urlpatterns = [
     path('detail/<int:movie_pk>/comments/', views.movie_create_comment, name='movie_create_comment'),
     path('detail/<int:movie_pk>/comments/<int:comment_pk>/', views.movie_delete_comment, name='movie_delete_comment'),
     path('newmovies/', views.new_movies, name='new_movies'),
+    path('search/', views.search, name='search'),
+    path('mytype/', views.mytype_movie, name='mytype_movie'),
+    path('mytypedetail/<int:movie_pk>/', views.mytype_detail, name='mytype_detail'),
+
 
     # 추천 알고리즘
     path('saveuserscore/<int:movie_pk>/', views.save_user_score, name="save_user_score"),

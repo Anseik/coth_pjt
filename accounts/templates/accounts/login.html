@@ -9,7 +9,12 @@
       <button class="btn btn-warning"type="submit">
         제출
       </button>
+      <button class="btn btn-warning mx-3">
+        <a class="text-decoration-none text-body" href="{% url 'accounts:signup' %}">
+          회원가입
+        </a>
+      </button>
     {% endbuttons %}
   </form>
-  <button class="btn btn-warning"><a class="text-decoration-none text-body" href="{% url 'accounts:signup' %}">회원가입</a></button>
+  
 {% endblock %}
