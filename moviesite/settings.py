@@ -147,3 +147,8 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'uploaded_files'
 
 AUTH_USER_MODEL = 'accounts.User'
+
+
+X_FRAME_OPTIONS = 'ALLOWALL'
+
+XS_SHARING_ALLOWED_METHODS = ['POST','GET','OPTIONS', 'PUT', 'DELETE']
