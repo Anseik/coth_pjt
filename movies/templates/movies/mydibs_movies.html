@@ -7,7 +7,7 @@
       {% for movie in mydibs_movies %}
         <div class="d-flex justify-content-center">
           <figure class="snip1436">
-            <img src="http://image.tmdb.org/t/p/w185/{{ movie.poster_path }}" alt="" />
+            <img class="rounded" src="http://image.tmdb.org/t/p/w185/{{ movie.poster_path }}" alt="" />
             <figcaption>
                 <h4>{{ movie.title }}</h4>
                 <p>평점 : {{ movie.vote_average }}</p>

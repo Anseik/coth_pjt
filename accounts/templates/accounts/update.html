@@ -14,7 +14,7 @@
   <form action="{% url 'accounts:delete' request.user.pk %}" method="POST" class="form">
     {% csrf_token %}
     <button class="btn btn-danger" type="submit">
-      회원탈퇴
+      탈퇴
     </button>
   </form>
 {% endblock %}

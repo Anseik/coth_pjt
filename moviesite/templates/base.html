@@ -12,6 +12,17 @@
   <link rel="stylesheet" href="{% static './src/stylesheets/popularMovie.css' %}">
   <link rel="stylesheet" type="text/css" href="{% static './src/stylesheets/main.css' %}">
   <link rel="stylesheet" type="text/css" href="{% static './src/stylesheets/mozaic.css' %}">
+  <link href="http://fonts.googleapis.com/earlyaccess/nanumpenscript.css" rel="stylesheet">
+  <link href="http://fonts.googleapis.com/earlyaccess/jejugothic.css" rel="stylesheet">
+  <link href="http://fonts.googleapis.com/earlyaccess/jejumyeongjo.css" rel="stylesheet">
+  <link href="http://fonts.googleapis.com/earlyaccess/kopubbatang.css" rel="stylesheet">
+  <link href="http://fonts.googleapis.com/earlyaccess/nanumbrushscript.css" rel="stylesheet">
+  <link href="http://fonts.googleapis.com/earlyaccess/notosanskr.css" rel="stylesheet">
+  <link href="http://fonts.googleapis.com/earlyaccess/hanna.css" rel="stylesheet">
+  <link href="http://fonts.googleapis.com/earlyaccess/nanumgothic.css" rel="stylesheet">
+  <link href="http://fonts.googleapis.com/earlyaccess/nanummyeongjo.css" rel="stylesheet">
+  <link href="http://fonts.googleapis.com/earlyaccess/jejuhallasan.css" rel="stylesheet">
+  <link href="http://fonts.googleapis.com/earlyaccess/nanumgothiccoding.css" rel="stylesheet">
   <title>Base</title>
   <style type="text/css">
     .select li:hover{
@@ -19,6 +30,17 @@
       font-size: 16px;
       color: #f05d23;
     }
+    .np{font-family: 'Nanum Pen Script', cursive;}
+    .jg{font-family: 'Jeju Gothic', sans-serif;}
+    .jm{font-family: 'Jeju Myeongjo', serif;}
+    .kb{font-family: 'KoPub Batang', serif;}
+    .nb{font-family: 'Nanum Brush Script', cursive;}
+    .ns{font-family: 'Noto Sans KR', sans-serif;}
+    .hn{font-family: 'Hanna', sans-serif;}
+    .ng{font-family: 'Nanum Gothic', sans-serif;}
+    .nm{font-family: 'Nanum Myeongjo', serif;}
+    .jh{font-family: 'Jeju Hallasan', cursive;}
+    .ngc{font-family: 'Nanum Gothic Coding', monospace;}    
   </style>  
 </head>
 <body>
@@ -34,7 +56,7 @@
           <button class="navbar-toggler p-0 pt-2 border-none" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon text-light" style="">+</span>
           </button>
-          <div class="collapse navbar-collapse" id="navbarNav">
+          <div class="collapse navbar-collapse ns" id="navbarNav">
             <ul class="main_nav navbar-nav select">
                 <li class="main_nav_tab nav-item"><a class="text-reset text-decoration-none" href="{% url 'movies:index' %}">홈</a></li>
                 <li class="main_nav_tab nav-item"><a class="text-reset text-decoration-none" href="{% url 'articles:review_index' %}">사용자 리뷰</a></li>

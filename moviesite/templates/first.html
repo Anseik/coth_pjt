@@ -7,7 +7,73 @@
   <title>COTH</title>
   <script src="https://kit.fontawesome.com/c3d7bf9e49.js" crossorigin="anonymous"></script>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
-  <link rel="stylesheet" type="text/css" href="{% static './src/stylesheets/first.css' %}">
+  <!-- <link rel="stylesheet" type="text/css" href="{% static './src/stylesheets/first.css' %}"> -->
+  <style>
+    .grid12-6{
+      position:relative;
+    }
+    .grid12-6 .img{
+    max-width:100%; 
+    height:auto;
+    }
+    .grid12-6 .info-box{
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      top:0%;
+      left: 0%;
+    }
+    .grid12-6 .inner_box{
+      position:absolute;
+      background:rgba(255, 255, 255, 0.178);
+      /* background: #ebebe3; */
+      top:40%;
+      left:50%;
+      transform:translate(-50%,-50%);
+      padding:30px;
+      text-align:center;
+    }
+    .grid12-6 .inner_box h2{
+      font-family:arial;
+      text-align:center;
+      font-size:24px;
+      font-weight: bold;
+      color:wheat;
+    }
+    .grid12-6 .inner_box button{
+      background:black;
+      color:#ff7517;
+      font-weight:bold;
+      font-size:16px;
+      border:none;
+      padding:10px 30px;
+    }
+    .grid12-6 .inner_box a{
+    color: wheat;
+    }
+    .grid12-6 .inner_box_2{
+      position:absolute;
+      /* background:rgba(255,255,255,0.7);` */
+      /* background: #ebebe3; */
+      top: 10%;
+      left: 50%;
+      transform:translate(-50%,-50%);
+      padding:30px;
+      text-align:center;
+    }
+    .grid12-6 .inner_box_2 button {
+    background:black;
+    font-weight:bold;
+    font-size:20px;
+    border:none;
+    }
+    .grid12-6 .inner_box_2 a{
+    color: wheat;
+    }
+    img { 
+    filter: brightness(60%); 
+    }
+  </style>
 </head>
 <body>
   <div class="bg_b">
@@ -15,11 +81,12 @@
         <div style="position: absolute;" class="carousel-item active grid12-6">
           <img src="{% static './assets/img/first/Toy_Story.jpg' %}" class="d-block w-100 h-auto" alt="...">
           <div class="inner_box_2">
-            <button><a href="{% url 'accounts:login' %}">LOGIN</a></button>
+            <!-- <button class="rounded-pill btn-lg"><a href="{% url 'accounts:signup' %}">회원가입</a></button> -->
+            <button class="rounded-pill btn-lg mx-3"><a href="{% url 'accounts:login' %}">LOGIN</a></button>
           </div>
-          <div class="inner_box">             
+          <div class="inner_box rounded-pill">             
             <h2>보고 싶은 영화를 무제한으로</h2>
-            <button><a href="{% url 'movies:index' %}">START NOW!</a></button>
+            <button class="rounded-pill btn-lg mx-3"><a href="{% url 'movies:index' %}">START NOW!</a></button>
           </div>
           <div class="carousel-caption d-none d-md-block">
             <p>Free with COTH @madeby Seik&Minju</p>
@@ -28,11 +95,12 @@
         <div class="carousel-item  grid12-6">
           <img class ="img-fluid" src="{% static './assets/img/first/infinity_war.jpg' %}" class="d-block w-100" alt="...">
           <div class="inner_box_2">
-            <button><a href="{% url 'accounts:login' %}">LOGIN</a></button>
+            <!-- <button class="rounded-pill btn-lg"><a href="{% url 'accounts:signup' %}">회원가입</a></button> -->
+            <button class="rounded-pill btn-lg mx-3"><a href="{% url 'accounts:login' %}">LOGIN</a></button>
           </div>
-          <div class="inner_box">
+          <div class="inner_box rounded-pill">
             <h2>최신 콘텐츠를 무제한으로</h2>           
-            <button><a href="{% url 'movies:index' %}">START NOW!</a></button>
+            <button class="rounded-pill btn-lg mx-3"><a href="{% url 'movies:index' %}">START NOW!</a></button>
           </div>
           <div class="carousel-caption d-none d-md-block">
             <p>Free with COTH @madeby Seik&Minju</p>
@@ -41,11 +109,12 @@
         <div class="carousel-item  grid12-6">
           <img src="{% static './assets/img/first/abouttime.png' %}" class="d-block w-100" alt="...">
           <div class="inner_box_2">
-            <button><a href="{% url 'accounts:login' %}">LOGIN</a></button>
+            <!-- <button class="rounded-pill btn-lg"><a href="{% url 'accounts:signup' %}">회원가입</a></button> -->
+            <button class="rounded-pill btn-lg mx-3"><a href="{% url 'accounts:login' %}">LOGIN</a></button>
           </div>
-          <div class="inner_box">
+          <div class="inner_box rounded-pill">
             <h2>당신의 취향에 맞춘 영화 순위</h2>
-            <button><a href="{% url 'movies:index' %}">START NOW!</a></button>  
+            <button class="rounded-pill btn-lg mx-3"><a href="{% url 'movies:index' %}">START NOW!</a></button>
           </div>
           <div class="carousel-caption d-none d-md-block">
             <p>Free with COTH @madeby Seik&Minju</p>
