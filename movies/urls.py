@@ -6,6 +6,8 @@ urlpatterns = [
     # 관리자
     path('savedata/', views.savedata, name="savedata"),
     path('deletedata/', views.deletedata, name="deletedata"),
+    path('savegenres/', views.save_genres, name="save_genres"),
+    path('deletegenres/', views.delete_genres, name="delete_genres"),
 
     # 사용자 
     path('', views.index, name="index"),

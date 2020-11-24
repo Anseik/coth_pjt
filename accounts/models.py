@@ -19,6 +19,31 @@ class User(AbstractUser):
     nickname = models.CharField(max_length=20)
     dibs_movies = models.ManyToManyField(Movie, related_name='dibs_users', blank=True, null=True)
 
+    class Prefer(models.IntegerChoices):
+        액션 = 28
+        모험 = 12
+        애니메이션 = 16
+        코미디 = 35
+        범죄 = 80
+        다큐멘터리 = 99
+        드라마 = 18
+        가족 = 10751
+        판타지 = 14
+        역사 = 36
+        공포 = 27
+        음악 = 10402
+        미스터리 = 9648
+        로맨스 = 10749
+        SF = 878
+        TV영화 = 10770
+        스릴러 = 53
+        전쟁 = 10752
+        서부 = 37
+
+    genre_prefer1 = models.IntegerField(choices=Prefer.choices)
+    genre_prefer2 = models.IntegerField(choices=Prefer.choices)
+    genre_prefer3 = models.IntegerField(choices=Prefer.choices)    
+
 
 class UserFavoriteMovie(models.Model):
     popularity = models.IntegerField()

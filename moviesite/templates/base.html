@@ -14,20 +14,20 @@
   <link rel="stylesheet" type="text/css" href="{% static './src/stylesheets/mozaic.css' %}">
   <title>Base</title>
   <style type="text/css">
-  .select li:hover{
-    font-weight: bold;
-    font-size: 16px;
-    color: #f05d23;
-  }
+    .select li:hover{
+      font-weight: bold;
+      font-size: 16px;
+      color: #f05d23;
+    }
   </style>  
 </head>
 <body>
   <!-- 네브바 -->
   <nav class="navbar navbar-expand-lg">
       <div class="header_container">
-          <div class="logo">          
+          <div class="logo">
               <a href="{% url 'movies:index' %}">
-                  <img src="{% static './assets/img/brand_logo_final.png' %}" alt="COTH">
+                  <img src="{% static './assets/img/logo/brand_logo_final.png' %}" alt="COTH">
               </a>
               <button class="header_toggleBtn"><i class="fa fa-bars"></i></button>
           </div>
@@ -56,6 +56,18 @@
                       <button class="btn text-light">데이터삭제</button>
                     </form>
                   </li>
+                  <li class="main_nav_tab nav-item">
+                    <form class="d-inline" action="{% url 'movies:save_genres' %}" method="POST">
+                      {% csrf_token %}
+                      <button class="btn text-light">장르갱신</button>
+                    </form>
+                  </li>
+                  <li class="main_nav_tab nav-item">
+                    <form class="d-inline" action="{% url 'movies:delete_genres' %}" method="POST">
+                      {% csrf_token %}
+                      <button class="btn text-light">장르삭제</button>
+                    </form>
+                  </li>
                 {% endif %}              
             </ul>
             <ul class="sub_nav navbar-nav">
@@ -80,8 +92,6 @@
   <!-- 자바스크립트 -->
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.20/lodash.min.js"></script>
-
-출처: https://sambalim.tistory.com/21 [삼바의 성장 블로그]
   {% comment %} 
   <script src="./src/javascripts/header.js"></script>
   <script type="module" src="./src/javascripts/index.js"></script> 

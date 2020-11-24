@@ -1,0 +1,36 @@
+<h3 class="text-white mt-5">&ensp;&ensp;&ensp;#선호장르2 : {{ genre_prefer2 }}</h3><br>
+<div class="row row-cols-1 row-cols-sm-2 row-cols-lg-4">
+  {% for movie in prefer2_movies %}
+    <div class="d-flex justify-content-center">
+      <figure class="snip1436">
+        <img src="http://image.tmdb.org/t/p/w185/{{ movie.poster_path }}" alt="" />
+        <figcaption>
+            <h4>{{ movie.title }}</h4>
+            <p>평점 : {{ movie.vote_average }}</p>
+            <div class="icons"><a href="#"><i class="ion-chatbubbles"></i></a>
+              <a href="{% url 'movies:detail' movie.pk %}">상세보기</a>
+              {% if request.user.is_authenticated %}
+                <form id="dibs" method="POST" data-movie-pk="{{ movie.pk }}">
+                  {% csrf_token %}
+                  {% if request.user in movie.dibs_users.all %}
+                    <button class="btn btn-link d-block mx-auto">
+                      <i id="dibs-icon-{{ movie.pk }}" class="fas fa-save" style="color:green;"></i>
+                    </button>
+                  {% else %}
+                    <button class="btn btn-link d-block mx-auto">
+                      <i id="dibs-icon-{{ movie.pk }}" class="far fa-save" style="color:gray;"></i>
+                    </button>                  
+                  {% endif %}
+                </form>
+              {% endif %}
+              <p>
+                <span id="dibs-count-{{ movie.pk }}">
+                  {{ movie.dibs_users.all|length }}명이 찜
+                </span>
+              </p>
+            </div>
+        </figcaption>
+      </figure>
+    </div>
+  {% endfor %}
+</div> 

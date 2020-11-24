@@ -1,16 +1,45 @@
 import requests
+import json
 
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.decorators.http import require_http_methods, require_POST, require_GET
 
-from .models import Movie, MovieComment, UserScore
+from .models import Movie, MovieComment, UserScore, Genre, MovieGenre
 from accounts.models import User, UserFavoriteMovie, UserSimilarMovie
 
 from .forms import MovieCommentForm, UserScoreForm
 
 from django.http import JsonResponse
 
+
+genre_dict = {
+    12: '모험',         
+    14: '판타지',         
+    16: '애니메이션',         
+    18: '드라마',         
+    27: '공포',         
+    28: '액션',         
+    35: '코미디',         
+    36: '역사',         
+    37: '서부',         
+    53: '스릴러',         
+    80: '범죄',
+    99: '다큐멘터리',
+    878: 'SF',
+    9648: '미스터리',
+    10402: '음악',
+    10749: '로맨스',
+    10751: '가족',
+    10752: '전쟁',
+    10770: 'TV 영화',
+}
+
 # Create your views here.
+@require_GET
+def first(request):
+    return render(request, 'first.html')
+
+
 @require_POST
 def savedata(request):
     movie_titles = Movie.objects.all().values('title')
@@ -54,6 +83,15 @@ def savedata(request):
 
                 if not check_title in movie_titles:
                     movie.save()
+                
+                    genres = list(movie.genre_ids)
+                    for genre in genres:
+                        genre_instance = get_object_or_404(Genre, pk=genre)
+                        # print(genre_instance)
+                        moviegenre = MovieGenre()
+                        moviegenre.movie = movie
+                        moviegenre.genre = genre_instance
+                        moviegenre.save()
 
             
             response = requests.get(url_top, params=payload)
@@ -81,7 +119,16 @@ def savedata(request):
                 }
 
                 if not check_title in movie_titles:
-                    movie.save()          
+                    movie.save()
+                    
+                    genres = list(movie.genre_ids)
+                    for genre in genres:
+                        genre_instance = get_object_or_404(Genre, pk=genre)
+                        # print(genre_instance)
+                        moviegenre = MovieGenre()
+                        moviegenre.movie = movie
+                        moviegenre.genre = genre_instance
+                        moviegenre.save()
                 
     return redirect('movies:index')
 
@@ -94,19 +141,73 @@ def deletedata(request):
     return redirect('movies:index')
 
 
+@require_POST
+def save_genres(request):
+    genres_name = Genre.objects.all().values('name')
+    if request.user.is_superuser:
+        url_genre = 'https://api.themoviedb.org/3/genre/movie/list'
+
+        payload = {
+            'api_key': 'c786a622d66f3b488b2035f1808f07d7',
+            'language': 'ko-kr',
+        }
+
+        response = requests.get(url_genre, params=payload)
+        genres_dict = response.json()
+        # print(genres_dict['genres'])
+        result = genres_dict['genres']
+        for i in range(len(result)):
+            genre = Genre()
+            genre.genre_id = result[i]['id']
+            genre.name = result[i]['name']
+
+            check_name = {
+                'name': genre.name,
+            }
+
+            if not check_name in genres_name:
+                genre.save()
+
+    return redirect('movies:index')
+
+
+@require_POST
+def delete_genres(request):
+    genres = Genre.objects.all()
+    if request.user.is_superuser:
+        genres.delete()
+
+    return redirect('movies:index')
+
+
 @require_GET
 def index(request):
     user = request.user
-    movies = Movie.objects.all()
+    movies = Movie.objects.order_by('-vote_average')[:24]
     top_movies = Movie.objects.order_by('-vote_average')[:10] # top10
     date_movies  = Movie.objects.order_by('-release_date')[:10] # 최신영화
 
-    # 로그인된 유저일 경우 4개 추가
+    # 로그인된 유저일 경우
     if request.user.is_authenticated:
         similar_movies = user.usersimilarmovie_set.all().order_by('-vote_average')[:10]
         popularity_movies = Movie.objects.order_by('-popularity')[:10]
         dibs_movies = user.dibs_movies.order_by('-vote_average')[:10]
         vote_count_movies = Movie.objects.order_by('-vote_count')[:10]
+        # 선호 장르
+        prefer1_movieid = MovieGenre.objects.filter(genre=user.genre_prefer1).values('movie')
+        prefer2_movieid = MovieGenre.objects.filter(genre=user.genre_prefer2).values('movie')
+        prefer3_movieid = MovieGenre.objects.filter(genre=user.genre_prefer3).values('movie')
+        prefer1_movies = Movie.objects.filter(id__in=prefer1_movieid).order_by('-vote_average')[:8]
+        prefer2_movies = Movie.objects.filter(id__in=prefer2_movieid).order_by('-vote_average')[:8]
+        prefer3_movies = Movie.objects.filter(id__in=prefer3_movieid).order_by('-vote_average')[:8]
+
+        genre_prefer1 = genre_dict[user.genre_prefer1]
+        genre_prefer2 = genre_dict[user.genre_prefer2]
+        genre_prefer3 = genre_dict[user.genre_prefer3]
+
+        # print(genre_prefer1)
+        # print(genre_prefer2)
+        # print(genre_prefer3)
 
         context = {
             'movies': movies,
@@ -116,10 +217,16 @@ def index(request):
             'popularity_movies': popularity_movies,
             'dibs_movies': dibs_movies,
             'vote_count_movies': vote_count_movies,
+            'prefer1_movies': prefer1_movies,
+            'prefer2_movies': prefer2_movies,
+            'prefer3_movies': prefer3_movies,
+            'genre_prefer1': genre_prefer1,
+            'genre_prefer2': genre_prefer2,
+            'genre_prefer3': genre_prefer3,
         }
         return render(request, 'movies/index.html', context)        
 
-    # 로그인하지 않은 유저일 경우 2개 추가
+    # 로그인하지 않은 유저일 경우
     else:
         popularity_movies = Movie.objects.order_by('-popularity')[:10]
         vote_count_movies = Movie.objects.order_by('-vote_count')[:10]
@@ -146,13 +253,22 @@ def detail(request, movie_pk):
     if request.user.is_authenticated:
         user_movie_score = request.user.userscore_set.filter(user=request.user).filter(movie_origin_id=movie.movie_id)
     else:
-        user_movie_score = []            
+        user_movie_score = []
+
+    genres = json.loads(movie.genre_ids)
+    # print(genres)
+    genres_name = []
+    for genre in genres:
+        genres_name.append(genre_dict[genre])
+    # print(genres_name)
+   
     context = {
         'movie': movie,
         'user_score_form': user_score_form,
         'movie_comment_form': movie_comment_form,
         'movie_comments': movie_comments,
         'user_movie_score': user_movie_score,
+        'genres_name': genres_name,
     }
     return render(request, 'movies/detail.html', context)
 

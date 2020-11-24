@@ -1,0 +1,64 @@
+.grid12-6{
+  position:relative;
+}
+.grid12-6 .img{
+ max-width:100%; 
+ height:auto;
+}
+.grid12-6 .info-box{
+   position: absolute;
+   width: 10px;
+   height: 10px;
+   top:0%;
+   left: 0%;
+}
+.grid12-6 .inner_box{
+   position:absolute;
+   background:rgba(255, 255, 255, 0.178);
+   /* background: #ebebe3; */
+   top:45%;
+   left:50%;
+   transform:translate(-50%,-50%);
+   padding:30px;
+   text-align:center;
+}
+.grid12-6 .inner_box h2{
+   font-family:arial;
+   text-align:center;
+   font-size:24px;
+   font-weight: bold;
+   color:wheat;
+}
+.grid12-6 .inner_box button{
+   background:black;
+   color:#ff7517;
+   font-weight:bold;
+   font-size:16px;
+   border:none;
+   padding:10px 30px;
+}
+.grid12-6 .inner_box a{
+ color: wheat;
+}
+.grid12-6 .inner_box_2{
+   position:absolute;
+   /* background:rgba(255,255,255,0.7); */
+   /* background: #ebebe3; */
+   top: 80%;
+   left: 50%;
+   transform:translate(-50%,-50%);
+   padding:30px;
+   text-align:center;
+}
+.grid12-6 .inner_box_2 button {
+ background:black;
+ font-weight:bold;
+ font-size:20px;
+ border:none;
+}
+.grid12-6 .inner_box_2 a{
+ color: wheat;
+}
+img { 
+ filter: brightness(60%); 
+}

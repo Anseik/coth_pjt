@@ -14,7 +14,7 @@ class CustomUserChangeForm(UserChangeForm):
 
     class Meta:
         model = get_user_model()
-        fields = ['email', 'nickname', 'image', 'selfpr']
+        fields = ['email', 'nickname', 'image', 'selfpr', 'genre_prefer1', 'genre_prefer2', 'genre_prefer3']
 
 class CustomUserCreationForm(UserCreationForm):
     selfpr = forms.CharField(
@@ -28,5 +28,5 @@ class CustomUserCreationForm(UserCreationForm):
 
     class Meta(UserCreationForm.Meta):
         model = get_user_model()
-        fields = UserCreationForm.Meta.fields + ('email', 'nickname', 'image', 'selfpr')
+        fields = UserCreationForm.Meta.fields + ('email', 'nickname', 'image', 'selfpr', 'genre_prefer1', 'genre_prefer2', 'genre_prefer3')
 

@@ -13,6 +13,11 @@
       <img class="p-4" src="http://image.tmdb.org/t/p/w185/{{ movie.poster_path }}" alt="">
       <div class="d-flex flex-column justify-content-between p-4">
         <h4>영화 정보</h4>
+        <div>장르 :
+          {% for genre_name in genres_name  %}
+            <span>{{ genre_name }}</span>
+          {% endfor %}
+        </div>
         <h5>줄거리</h5>
         <h6>{{ movie.overview }}</h5>
         <hr>

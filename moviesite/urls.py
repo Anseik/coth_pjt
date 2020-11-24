@@ -20,8 +20,8 @@ from django.conf import settings
 from movies import views
 
 urlpatterns = [
+    path('', views.first),
     path('admin/', admin.site.urls),
-    path('', views.index),
     path('accounts/', include('accounts.urls')),
     path('articles/', include('articles.urls')),
     path('movies/', include('movies.urls')),

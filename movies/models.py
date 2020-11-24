@@ -2,6 +2,8 @@ from django.db import models
 from django.conf import settings
 
 # Create your models here.
+
+
 class Movie(models.Model):
     popularity = models.IntegerField()
     vote_count = models.IntegerField()
@@ -15,6 +17,16 @@ class Movie(models.Model):
     vote_average = models.IntegerField()
     overview = models.TextField()
     release_date = models.TextField()
+    
+
+class Genre(models.Model):
+    name = models.CharField(max_length=50)
+    movies = models.ManyToManyField(Movie, through='MovieGenre')
+
+
+class MovieGenre(models.Model):
+    movie = models.ForeignKey(Movie, on_delete=models.CASCADE)
+    genre = models.ForeignKey(Genre, on_delete=models.CASCADE)
 
 
 class UserScore(models.Model):

@@ -27,7 +27,7 @@
             {% else %}
             <div class="carousel-item">
             {% endif %}
-              <img src="http://image.tmdb.org/t/p/w185/{{ top_movie.poster_path }}" class="d-block w-100" alt="...">
+              <img src="http://image.tmdb.org/t/p/w185/{{ top_movie.poster_path }}" class="d-block w-100" alt="..." style="height:400px;">
               <div class="carousel-caption d-none d-md-block">
                 <h5>{{ top_movie.title }}</h5>
                 <p>평점 : {{ top_movie.vote_average}}</p>
@@ -67,7 +67,7 @@
               {% else %}
               <div class="carousel-item">
               {% endif %}
-                <img src="http://image.tmdb.org/t/p/w185/{{ similar_movie.poster_path }}" class="d-block w-100" alt="...">
+                <img src="http://image.tmdb.org/t/p/w185/{{ similar_movie.poster_path }}" class="d-block w-100" alt="..." style="height:400px;">
                 <div class="carousel-caption d-none d-md-block">
                   <h5>{{ similar_movie.title }}</h5>
                   <p>평점 : {{ similar_movie.vote_average}}</p>
@@ -103,7 +103,7 @@
               {% else %}
               <div class="carousel-item">
               {% endif %}
-                <img src="http://image.tmdb.org/t/p/w185/{{ popularity_movie.poster_path }}" class="d-block w-100" alt="...">
+                <img src="http://image.tmdb.org/t/p/w185/{{ popularity_movie.poster_path }}" class="d-block w-100" alt="..." style="height:400px;">
                 <div class="carousel-caption d-none d-md-block">
                   <h5>{{ popularity_movie.title }}</h5>
                   <p>평점 : {{ popularity_movie.vote_average}}</p>
@@ -146,7 +146,7 @@
               {% else %}
               <div class="carousel-item">
               {% endif %}
-                <img src="http://image.tmdb.org/t/p/w185/{{ dibs_movie.poster_path }}" class="d-block w-100" alt="...">
+                <img src="http://image.tmdb.org/t/p/w185/{{ dibs_movie.poster_path }}" class="d-block w-100" alt="..." style="height:400px;">
                 <div class="carousel-caption d-none d-md-block">
                   <h5>{{ dibs_movie.title }}</h5>
                   <p>평점 : {{ dibs_movie.vote_average}}</p>
@@ -182,7 +182,7 @@
               {% else %}
               <div class="carousel-item">
               {% endif %}
-                <img src="http://image.tmdb.org/t/p/w185/{{ vote_count_movie.poster_path }}" class="d-block w-100" alt="...">
+                <img src="http://image.tmdb.org/t/p/w185/{{ vote_count_movie.poster_path }}" class="d-block w-100" alt="..." style="height:400px;">
                 <div class="carousel-caption d-none d-md-block">
                   <h5>{{ vote_count_movie.title }}</h5>
                   <p>평점 : {{ vote_count_movie.vote_average}}</p>
@@ -225,7 +225,7 @@
             {% else %}
             <div class="carousel-item">
             {% endif %}
-              <img src="http://image.tmdb.org/t/p/w185/{{ date_movie.poster_path }}" class="d-block w-100" alt="...">
+              <img src="http://image.tmdb.org/t/p/w185/{{ date_movie.poster_path }}" class="d-block w-100" alt="..." style="height:400px;">
               <div class="carousel-caption d-none d-md-block">
                 <h5>{{ date_movie.title }}</h5>
                 <p>평점 : {{ date_movie.vote_average}}</p>
@@ -247,8 +247,13 @@
 
   <!-- 영화 카드 -->
   {% comment %} 영화를 장르별로 구분해서 보여주자!!!! 선호장르1, 선호장르2, 선호장르3 {% endcomment %}
+  {% if request.user.is_authenticated %}
+    {% include 'movies/_prefer1.html' %}
+    {% include 'movies/_prefer2.html' %}
+    {% include 'movies/_prefer3.html' %}
+  {% else %}
     <h3 class="text-white mt-5">&ensp;&ensp;&ensp;#전체영화</h3><br>
-    <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-4">
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-4 mb-5">
       {% for movie in movies %}
         <div class="d-flex justify-content-center">
           <figure class="snip1436">
@@ -286,6 +291,7 @@
         </div>
       {% endfor %}
     </div>
+  {% endif %}
 {% endblock content %}
 
 {% block script %}
