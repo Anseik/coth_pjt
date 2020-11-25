@@ -41,9 +41,9 @@ class User(AbstractUser):
         전쟁 = 10752
         서부 = 37
 
-    genre_prefer1 = models.IntegerField(verbose_name="선호장르1 *", choices=Prefer.choices)
-    genre_prefer2 = models.IntegerField(verbose_name="선호장르2 *", choices=Prefer.choices)
-    genre_prefer3 = models.IntegerField(verbose_name="선호장르3 *", choices=Prefer.choices)    
+    genre_prefer1 = models.IntegerField(verbose_name="선호장르1 *", choices=Prefer.choices, null=True)
+    genre_prefer2 = models.IntegerField(verbose_name="선호장르2 *", choices=Prefer.choices, null=True)
+    genre_prefer3 = models.IntegerField(verbose_name="선호장르3 *", choices=Prefer.choices, null=True)
 
 
 class UserFavoriteMovie(models.Model):

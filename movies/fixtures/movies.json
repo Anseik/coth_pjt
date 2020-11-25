@@ -1,0 +1,462 @@
+[
+{
+    "model": "movies.movie",
+    "pk": 1,
+    "fields": {
+        "popularity": 1160,
+        "vote_count": 168,
+        "video": false,
+        "poster_path": "/ugZW8ocsrfgI95pnQ7wrmKDxIe.jpg",
+        "movie_id": 724989,
+        "original_language": "en",
+        "original_title": "Hard Kill",
+        "genre_ids": "[28, 53]",
+        "title": "하드 킬",
+        "vote_average": 5,
+        "overview": "",
+        "release_date": "2020-10-23"
+    }
+},
+{
+    "model": "movies.movie",
+    "pk": 2,
+    "fields": {
+        "popularity": 935,
+        "vote_count": 632,
+        "video": false,
+        "poster_path": "/wLgHczwajb3QV2JBgsqNVjuHoJC.jpg",
+        "movie_id": 524047,
+        "original_language": "en",
+        "original_title": "Greenland",
+        "genre_ids": "[28, 53]",
+        "title": "그린랜드",
+        "vote_average": 7,
+        "overview": "혜성의 지구 충돌 속보를 지켜보던 존과 가족들. 미 항공우주국(NASA)의 예측과 달리 해상으로 떨어졌어야 할 파편은 캘리포니아를 비롯해 세계 대도시로 추락해 세계는 순식간에 혼돈에 빠진다. 지구의 3/4을 날려버릴 초대형 혜성 추락까지 남은 시간은 단 48시간. 존과 가족은 지구의 유일한 안전 대피소인 ‘그린란드’의 벙커로 향하는데... 인류의 마지막 카운트다운이 시작된다!",
+        "release_date": "2020-07-29"
+    }
+},
+{
+    "model": "movies.movie",
+    "pk": 3,
+    "fields": {
+        "popularity": 956,
+        "vote_count": 768,
+        "video": false,
+        "poster_path": "/betExZlgK0l7CZ9CsCBVcwO1OjL.jpg",
+        "movie_id": 531219,
+        "original_language": "en",
+        "original_title": "Roald Dahl's The Witches",
+        "genre_ids": "[14, 10751, 12, 35, 27]",
+        "title": "마녀를 잡아라",
+        "vote_average": 6,
+        "overview": "마녀들로부터 발각되어 생쥐로 변해버린 소년이 과거 마녀전담반이었던 할머니와 함께 마녀들과 맞선다는 내용의 판타지 어드벤처",
+        "release_date": "2020-10-26"
+    }
+},
+{
+    "model": "movies.movie",
+    "pk": 4,
+    "fields": {
+        "popularity": 934,
+        "vote_count": 231,
+        "video": false,
+        "poster_path": "/hSpm2mMbkd0hLTRWBz0zolnLAyK.jpg",
+        "movie_id": 671039,
+        "original_language": "fr",
+        "original_title": "Bronx",
+        "genre_ids": "[53, 28, 18, 80]",
+        "title": "로그 시티",
+        "vote_average": 5,
+        "overview": "부패경찰과 마르세유의 조폭 사이의 문제로 위기의  경찰조직을 보호해야 한다.",
+        "release_date": "2020-10-30"
+    }
+},
+{
+    "model": "movies.movie",
+    "pk": 5,
+    "fields": {
+        "popularity": 1046,
+        "vote_count": 1522,
+        "video": false,
+        "poster_path": "/j8MRnCjuN7kpM8w3B5hM5mrvTaE.jpg",
+        "movie_id": 400160,
+        "original_language": "en",
+        "original_title": "The SpongeBob Movie: Sponge on the Run",
+        "genre_ids": "[16, 14, 12, 35, 10751]",
+        "title": "스폰지밥 무비: 핑핑이 구출 대작전",
+        "vote_average": 8,
+        "overview": "우리 핑핑이가 어디로 갔을까? 설마, 납치당한 건가? 사랑하는 반려 달팽이를 찾아 떠나는 스폰지밥. 뚱이도 함께 가야지. 비키니 시티를 벗어나 미지의 세계로, 출발이다!",
+        "release_date": "2020-08-14"
+    }
+},
+{
+    "model": "movies.movie",
+    "pk": 6,
+    "fields": {
+        "popularity": 695,
+        "vote_count": 161,
+        "video": false,
+        "poster_path": "/elZ6JCzSEvFOq4gNjNeZsnRFsvj.jpg",
+        "movie_id": 741067,
+        "original_language": "en",
+        "original_title": "Welcome to Sudden Death",
+        "genre_ids": "[28, 53, 12, 18]",
+        "title": "웰컴 투 서든 데쓰",
+        "vote_average": 6,
+        "overview": "",
+        "release_date": "2020-09-29"
+    }
+},
+{
+    "model": "movies.movie",
+    "pk": 7,
+    "fields": {
+        "popularity": 708,
+        "vote_count": 167,
+        "video": false,
+        "poster_path": "/zfdhsR3Y3xw42OHrMpi0oBw0Uk8.jpg",
+        "movie_id": 741074,
+        "original_language": "en",
+        "original_title": "Once Upon a Snowman",
+        "genre_ids": "[16, 10751, 35, 14]",
+        "title": "원스 어폰 어 스노우맨",
+        "vote_average": 6,
+        "overview": "",
+        "release_date": "2020-10-23"
+    }
+},
+{
+    "model": "movies.movie",
+    "pk": 8,
+    "fields": {
+        "popularity": 723,
+        "vote_count": 2983,
+        "video": false,
+        "poster_path": "/mQbxBKeRuAofS5p2w4mK7DqtS97.jpg",
+        "movie_id": 337401,
+        "original_language": "en",
+        "original_title": "Mulan",
+        "genre_ids": "[28, 12, 18, 14]",
+        "title": "뮬란",
+        "vote_average": 7,
+        "overview": "무예에 남다른 재능을 지닌 뮬란은 좋은 집안과 인연을 맺어 가문을 빛내길 바라는 부모님의 뜻에 따라 본연의 모습을 억누르고 성장한다. 어느 날, 북쪽 오랑캐들이 침입하자 황제는 징집령을 내리고 뮬란은 아픈 아버지를 대신해 가족들 몰래 전장에 나가기로 결심한다. 여자라는 게 발각되면 목숨을 잃을 수도 있는 상황 속에서 뮬란은 타고난 용기와 지혜로 역경을 이겨내며 전사로 성장한다. 마침내 잔인무도한 적장 보리 칸과 마녀 시아니앙을 마주하게 된 뮬란. 그녀는 위험에 빠진 동료와 가족을 구하고 진정한 전사로 거듭날 수 있을 것인가?",
+        "release_date": "2020-09-04"
+    }
+},
+{
+    "model": "movies.movie",
+    "pk": 9,
+    "fields": {
+        "popularity": 543,
+        "vote_count": 70,
+        "video": false,
+        "poster_path": "/e98dJUitAoKLwmzjQ0Yxp1VQrnU.jpg",
+        "movie_id": 571384,
+        "original_language": "en",
+        "original_title": "Come Play",
+        "genre_ids": "[27]",
+        "title": "커넥트",
+        "vote_average": 6,
+        "overview": "휴대폰에서 미스터리한 전자 책을 발견하고 자신도 모르게 또 다른 뒤집힌 세계의 통로를 열어버린 소년 ‘올리버’. 오직 디지털 기기 화면을 통해서만 볼 수 있는 미스터리 존재 ‘그것’의 타깃이 된다. ‘올리버’와 엄마 ‘사라’는 살아남기 위해 모든 디바이스로부터 필사적으로 도망쳐야 하는데… 당신의 일상을 집어삼킬 온택트 공포가 깨어난다!",
+        "release_date": "2020-10-28"
+    }
+},
+{
+    "model": "movies.movie",
+    "pk": 10,
+    "fields": {
+        "popularity": 688,
+        "vote_count": 2047,
+        "video": false,
+        "poster_path": "/szItf1XDOY6u0ZeaQFPc3bi1SL0.jpg",
+        "movie_id": 613504,
+        "original_language": "en",
+        "original_title": "After We Collided",
+        "genre_ids": "[10749, 18]",
+        "title": "애프터: 그 후",
+        "vote_average": 7,
+        "overview": "\"너만의 테사는 더 이상 없어!\"  첫사랑 하딘이 자신과의 연애를 내기에 걸었다는 비밀을 알게 된 '테사'  둘은 헤어지지만 서로의 살결과 숨결을 끊지 못하며 아슬아슬한 썸을 이어간다. 이후 대학 졸업을 앞둔 취준생 테사는 대형 출판사의 인턴십에 합격하고  거친 하딘과는 180도 다른 젠틀한 직장 남사친 '트레버'를 만나게 된다. \"테사의 두 번째 남자를 만났다\" 런던으로 떠나기 전에 테사를 향한 진심을 전하고 싶었던 '하딘' 테사의 용서를 기다리며 과거의 잘못을 하나씩 고쳐나간다.  워크숍 파티에서 취한 테사의 연락에 하딘은 기대 반, 걱정 반 마음으로 결국 테사의 호텔 룸에 찾아가고, 샤워실에서 그녀석 '트레버'와 마주치는데…",
+        "release_date": "2020-09-02"
+    }
+},
+{
+    "model": "movies.movie",
+    "pk": 11,
+    "fields": {
+        "popularity": 633,
+        "vote_count": 114,
+        "video": false,
+        "poster_path": "/5RbyHIVydD3Krmec1LlUV7rRjet.jpg",
+        "movie_id": 622855,
+        "original_language": "en",
+        "original_title": "Jingle Jangle: A Christmas Journey",
+        "genre_ids": "[10751, 14, 10402]",
+        "title": "징글 쟁글: 저니의 크리스마스",
+        "vote_average": 7,
+        "overview": "화려하고 생기 넘치는 코블튼 마을을 배경으로, 전설적인 장난감 제작자 제로니커스 쟁글의 이야기를 보여준다. 상상 속에서나 볼 법한 그의 발명품들은 기발함과 경이로움으로 가득하다. 그런데 쟁글이 신뢰했던 수습생이 그가 가장 아끼는 장난감을 훔쳐 간다. 이제 희망은 쟁글 못지않게 영리하고 창의적인 손녀에게 달려있다. 그리고 오랫동안 잊고 있던 발명품에. 오랜 상처를 치유하고 내면의 마법을 다시 깨울 수 있을까?",
+        "release_date": "2020-11-06"
+    }
+},
+{
+    "model": "movies.movie",
+    "pk": 12,
+    "fields": {
+        "popularity": 599,
+        "vote_count": 194,
+        "video": false,
+        "poster_path": "/m9ZDoCzSbQ7SAOz2tcb1rt6bGG2.jpg",
+        "movie_id": 694919,
+        "original_language": "en",
+        "original_title": "Money Plane",
+        "genre_ids": "[28]",
+        "title": "플레인 하이스트",
+        "vote_average": 5,
+        "overview": "마지막 게임에서의 거액의 빚을 갚기 위해 ‘다리우스’ 밑에서 일하게 된 전직 도박꾼 ‘잭’은 전세계 극악무도한 범죄자들이 모여 베팅을 벌이는 ‘머니 플레인’에 탑승해 현금 수백만 달러를 탈취하고 가상 화폐 10억 달러를 해킹하는 미션을 성공시켜야 한다. 하지만 다리우스는 잭을 함정에 빠뜨리고 잭은 플랜B를 가동해 되갚아주려 하는데…!",
+        "release_date": "2020-09-29"
+    }
+},
+{
+    "model": "movies.movie",
+    "pk": 13,
+    "fields": {
+        "popularity": 571,
+        "vote_count": 814,
+        "video": false,
+        "poster_path": "/bqZRy3tJjJIrA38FSdqJEufQ2Os.jpg",
+        "movie_id": 340102,
+        "original_language": "en",
+        "original_title": "The New Mutants",
+        "genre_ids": "[28, 878, 27, 12]",
+        "title": "뉴 뮤턴트",
+        "vote_average": 6,
+        "overview": "십대의 돌연변이 레인과 일리, 샘, 로베르토는 비밀 시설에 수용되어 심리 상태를 감시 받는다. 이들이 사회에는 물론 스스로에게도 위험한 존재라고 생각하는 닥터 레예스는 이들에게 돌연변이 능력을 통제하는 방법을 가르쳐주고자 애쓴다. 어느 날, 대재앙이 덮친 마을에서 혼자 살아남은 대니가 이곳에 들어오며 끔찍한 일들이 벌어지기 시작하고, 자신들의 힘을 두려워하고 다룰 줄 몰랐던 십대 돌연변이들은 믿기지 않는 경험을 하며 자신들의 능력을 각성하기 시작하는데…",
+        "release_date": "2020-08-26"
+    }
+},
+{
+    "model": "movies.movie",
+    "pk": 14,
+    "fields": {
+        "popularity": 559,
+        "vote_count": 13,
+        "video": false,
+        "poster_path": "/AnVD7Gn14uOTQhcc5xYZGQ9DRvS.jpg",
+        "movie_id": 624779,
+        "original_language": "en",
+        "original_title": "VFW",
+        "genre_ids": "[28, 53, 27]",
+        "title": "브이에프더블유",
+        "vote_average": 5,
+        "overview": "옛 전우들이 모여 술을 마시고 대화를 나누는 VFW(해외참전용사) 모임이 있던 밤. 어린 소녀 하나가 훔친 마약을 들고 그 모임에 들이닥친다. 그 뒤를 이어 잔인한 폭력배들이 여자 아이를 추적하면서 그 모임은 소녀와 퇴역군인 모두를 위한 생존 오두막으로 바뀐다. 참전용사들은 마약에 찌든 폭력배들의 끊임없는 공격에 총력전을 펼치기 위해 모을 수 있는 무기를 전부 모아 들이고, 결국 전면전이 뒤따른다.",
+        "release_date": "2020-10-14"
+    }
+},
+{
+    "model": "movies.movie",
+    "pk": 15,
+    "fields": {
+        "popularity": 617,
+        "vote_count": 2689,
+        "video": false,
+        "poster_path": "/riYInlsq2kf1AWoGm80JQW5dLKp.jpg",
+        "movie_id": 497582,
+        "original_language": "en",
+        "original_title": "Enola Holmes",
+        "genre_ids": "[80, 18, 9648]",
+        "title": "에놀라 홈즈",
+        "vote_average": 7,
+        "overview": "열여섯 생일을 맞은 셜록의 여동생, 에놀라 홈즈. 사라진 엄마를 찾아 런던으로 향한다. 명석한 두뇌의 대명사인 오빠까지 따돌리고, 위험에 빠진 귀족 청년의 미스터리와 엮이는데. 사건을 추적하며, 홈즈 가문답게 예리한 추리력이 폭발한다. 미스터리 가득한 이 모험, 무사히 마칠 수 있을까?",
+        "release_date": "2020-09-23"
+    }
+},
+{
+    "model": "movies.movie",
+    "pk": 16,
+    "fields": {
+        "popularity": 548,
+        "vote_count": 58,
+        "video": false,
+        "poster_path": "/2EjUq3eqvDKU4EXh482IQcttcx4.jpg",
+        "movie_id": 575088,
+        "original_language": "ru",
+        "original_title": "Яга. Кошмар тёмного леса",
+        "genre_ids": "[27]",
+        "title": "바바 야가",
+        "vote_average": 6,
+        "overview": "젊은 가족이 시 외곽의 새 아파트로 이사하며 새로 태어난 아기의 보모를 고용한다.  보모가 집에 들어오면서 이상한 일이 벌어지자 아들 이고르가 부모에게 말하지만 부모는 그 말을 믿지 않는다. 어느 날 집에 돌아온 이고르는 보모와 아기가 사라지고 부모가 이상한 행동을 하며 아기가 있었다는 사실을 기억 못 한다는 사실을 깨닫는다.  친구와 함께 아기를 찾아 나선 이고르는 보모가 바바 야가로 알려진 고대 슬라브 악령이라는 것을 알게 되는데...",
+        "release_date": "2020-02-27"
+    }
+},
+{
+    "model": "movies.movie",
+    "pk": 17,
+    "fields": {
+        "popularity": 877,
+        "vote_count": 9,
+        "video": false,
+        "poster_path": "/4ZocdxnOO6q2UbdKye2wgofLFhB.jpg",
+        "movie_id": 682377,
+        "original_language": "en",
+        "original_title": "Chick Fight",
+        "genre_ids": "[28, 35]",
+        "title": "치크 파이트",
+        "vote_average": 7,
+        "overview": "",
+        "release_date": "2020-11-13"
+    }
+},
+{
+    "model": "movies.movie",
+    "pk": 18,
+    "fields": {
+        "popularity": 545,
+        "vote_count": 655,
+        "video": false,
+        "poster_path": "/fJ0i5MKbBTKJGYY2uxsiUMdwMc6.jpg",
+        "movie_id": 539885,
+        "original_language": "en",
+        "original_title": "Ava",
+        "genre_ids": "[28, 80, 18, 53]",
+        "title": "에이바",
+        "vote_average": 5,
+        "overview": "타깃 제거 100%, 실패 확률 0%  킬러 ‘에이바’(제시카 차스테인).  프랑스 최대의 사기범을 제거하는 작전에 투입된 그녀는 임무 중 조직의 금기를 깨트린다. 한편, 그 사실을 알게 된 새로운 보스 ‘사이먼’(콜린 파렐)은 그녀를 제거할 것을 명령하게 되는데… 죽거나, 죽이거나 타깃이 된 그녀, 살기 위한 킬링 액션이 시작된다!",
+        "release_date": "2020-07-02"
+    }
+},
+{
+    "model": "movies.movie",
+    "pk": 19,
+    "fields": {
+        "popularity": 568,
+        "vote_count": 78,
+        "video": false,
+        "poster_path": "/k8Q9ulyRE8fkvZMkAM9LPYMKctb.jpg",
+        "movie_id": 618353,
+        "original_language": "en",
+        "original_title": "Batman: Death in the Family",
+        "genre_ids": "[16, 28]",
+        "title": "배트맨: 데스 인 더 패밀리",
+        "vote_average": 7,
+        "overview": "",
+        "release_date": "2020-10-13"
+    }
+},
+{
+    "model": "movies.movie",
+    "pk": 20,
+    "fields": {
+        "popularity": 517,
+        "vote_count": 469,
+        "video": false,
+        "poster_path": "/zG6QJjd5feBZBl7zeKHDDlgL8FY.jpg",
+        "movie_id": 560050,
+        "original_language": "en",
+        "original_title": "Over the Moon",
+        "genre_ids": "[16, 12, 10751, 14]",
+        "title": "오버 더 문",
+        "vote_average": 7,
+        "overview": "믿는 사람에게만 펼쳐지는 세상 똑똑하고 호기심 넘치는 소녀 페이 페이, 엄마가 어린 시절 들려준 전설 속 달의 여신 항아 이야기를 늘 마음에 풀고 살아간다. 일찍 하늘나라로 간 엄마를 그리워하며 살아가던 페이 페이는 어느 날 항아의 전설이 지어낸 이야기일 뿐이라는 고모의 말에 울컥해, 항아의 존재를 증명하기 위해 달로 향하는 로켓을 만들기로 결심한다. 수많은 시행착오 끝에 로켓 만들기에 성공한 페이 페이, 예상치 못한 모험을 떠나게 된 소녀는 신기한 생명체로 가득한 기묘한 세계를 발견하게 되는데…",
+        "release_date": "2020-10-16"
+    }
+},
+{
+    "model": "movies.movie",
+    "pk": 21,
+    "fields": {
+        "popularity": 59,
+        "vote_count": 385,
+        "video": false,
+        "poster_path": "/qtX2Fg9MTmrbgN1UUvGoCsImTM8.jpg",
+        "movie_id": 761053,
+        "original_language": "en",
+        "original_title": "Gabriel's Inferno Part III",
+        "genre_ids": "[]",
+        "title": "Gabriel's Inferno Part III",
+        "vote_average": 9,
+        "overview": "",
+        "release_date": "2020-11-19"
+    }
+},
+{
+    "model": "movies.movie",
+    "pk": 22,
+    "fields": {
+        "popularity": 12,
+        "vote_count": 999,
+        "video": false,
+        "poster_path": "/pci1ArYW7oJ2eyTo2NMYEKHHiCP.jpg",
+        "movie_id": 724089,
+        "original_language": "en",
+        "original_title": "Gabriel's Inferno Part II",
+        "genre_ids": "[10749]",
+        "title": "가브리엘의 지옥 파트 2",
+        "vote_average": 8,
+        "overview": "",
+        "release_date": "2020-07-31"
+    }
+},
+{
+    "model": "movies.movie",
+    "pk": 23,
+    "fields": {
+        "popularity": 14,
+        "vote_count": 1648,
+        "video": false,
+        "poster_path": "/oyG9TL7FcRP4EZ9Vid6uKzwdndz.jpg",
+        "movie_id": 696374,
+        "original_language": "en",
+        "original_title": "Gabriel's Inferno",
+        "genre_ids": "[10749]",
+        "title": "가브리엘의 지옥",
+        "vote_average": 8,
+        "overview": "",
+        "release_date": "2020-05-29"
+    }
+},
+{
+    "model": "movies.movie",
+    "pk": 24,
+    "fields": {
+        "popularity": 45,
+        "vote_count": 17587,
+        "video": false,
+        "poster_path": "/3hO6DIGRBaJQj2NLEYBMwpcz88D.jpg",
+        "movie_id": 278,
+        "original_language": "en",
+        "original_title": "The Shawshank Redemption",
+        "genre_ids": "[18, 80]",
+        "title": "쇼생크 탈출",
+        "vote_average": 8,
+        "overview": "촉망받는 은행 간부 앤디 듀프레인은 아내와 그녀의 정부를 살해했다는 누명을 쓴다. 주변의 증언과 살해 현장의 그럴듯한 증거들로 그는 종신형을 선고받고 악질범들만 수용한다는 지옥같은 교도소 쇼생크로 향한다. 인간 말종 쓰레기들만 모인 그곳에서 그는 이루 말할 수 없는 억압과 짐승보다 못한 취급을 당한다. 그러던 어느 날, 간수의 세금을 면제받게 해 준 덕분에 그는 일약 교도소의 비공식 회계사로 일하게 된다. 그 와중에 교도소 소장은 죄수들을 이리저리 부리면서 검은 돈을 긁어 모으고 앤디는 이 돈을 세탁하여 불려주면서 그의 돈을 관리하는데...",
+        "release_date": "1994-09-23"
+    }
+},
+{
+    "model": "movies.movie",
+    "pk": 25,
+    "fields": {
+        "popularity": 39,
+        "vote_count": 13296,
+        "video": false,
+        "poster_path": "/cOwVs8eYA4G9ZQs7hIRSoiZr46Q.jpg",
+        "movie_id": 238,
+        "original_language": "en",
+        "original_title": "The Godfather",
+        "genre_ids": "[18, 80]",
+        "title": "대부",
+        "vote_average": 8,
+        "overview": "시실리에서 이민온 뒤, 정치권까지 영향력을 미치는 거물로 자리잡은 돈 꼴레오네는 갖가지 고민을 호소하는 사람들의 문제를 해결해주며 대부라 불리운다. 한편 솔로소라는 인물은 꼴레오네가와 라이벌인 탓타리아 패밀리와 손잡고 새로운 마약 사업을 제안한다. 돈 꼴레오네가 마약 사업에 참여하지 않기로 하자, 돈 꼴레오네를 저격해 그는 중상을 입고 사경을 헤매게 된다. 그 뒤, 돈 꼴레오네의 아들 소니는 조직력을 총 동원해 다른 패밀리들과 피를 부르는 전쟁을 시작하는데... 가족의 사업과 상관없이 대학에 진학한 뒤 인텔리로 지내왔던 막내 아들 마이클은 아버지가 총격을 당한 뒤, 아버지를 구하기 위해 위험천만한 협상 자리에 나선다.",
+        "release_date": "1972-03-14"
+    }
+},
+{
+    "model": "movies.movie",
+    "pk": 26,
+    "fields": {
+        "popularity": 14,
+        "vote_count": 2432,
+        "video": false,
+        "poster_path": "/2CAL2433ZeIihfX1Hb2139CX0pW.jpg",
+        "movie_id": 19404,
+        "original_language": "hi",
+        "original_title": 

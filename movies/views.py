@@ -189,7 +189,7 @@ def index(request):
     date_movies  = Movie.objects.order_by('-release_date')[:10] # 최신영화
 
     # 로그인된 유저일 경우
-    if request.user.is_authenticated:
+    if request.user.is_authenticated and not request.user.is_superuser:
         mytype_movies = user.usersimilarmovie_set.all().order_by('-vote_average')[:10]
         popularity_movies = Movie.objects.order_by('-popularity')[:10]
         dibs_movies = user.dibs_movies.order_by('-vote_average')[:10]
