@@ -47,7 +47,7 @@ class UserScore(models.Model):
 class MovieComment(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     movie = models.ForeignKey(Movie, on_delete=models.CASCADE)
-    content = models.CharField(verbose_name="댓글내용", max_length=100)
+    content = models.CharField(verbose_name="한줄평", max_length=100)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     

@@ -270,7 +270,7 @@ def detail(request, movie_pk):
     for i in range(user_ranks):
         user_stars.append('*')
 
-    print(user_stars)
+    # print(user_stars)
    
     context = {
         'movie': movie,

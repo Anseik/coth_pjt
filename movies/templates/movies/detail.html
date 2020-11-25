@@ -83,7 +83,7 @@
         {% bootstrap_form movie_comment_form %}
         {% buttons %}
           <button type="submit" class="btn btn-secondary">
-            댓글작성
+            한줄평 작성
           </button>
         {% endbuttons %}
       </form>
@@ -93,7 +93,7 @@
   </div>
 
   <!-- 댓글 보여주기-->
-  <h4 class="mb-3 text-white ns">댓글</h4>
+  <h4 class="mb-3 text-white ns">한줄평</h4>
   <div class="mb-5 ns">
     {% for movie_comment in movie_comments %}
       <ul class="list-group pl-0">
