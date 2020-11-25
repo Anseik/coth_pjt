@@ -1,12 +1,16 @@
 {% extends 'base.html' %}
 {% load bootstrap4 %}
 {% block content %}
-  <form action="" method="POST" class="form text-white mt-5" enctype="multipart/form-data">
+  <div class="text-white mt-5 pt-3 w-75 mx-auto ns">
+    <h3># 글 수정</h3>
+    <a href="{% url 'articles:talk_index' %}"><button class="btn btn-sm btn-danger mt-2">뒤로가기</button></a>
+  </div>
+  <form action="" method="POST" class="form text-white mt-3 w-75 mx-auto" enctype="multipart/form-data">
     {% csrf_token %}
     {% bootstrap_form form %}
     {% buttons %}
-      <button type="submit" class="btn btn-info">
-        수정
+      <button type="submit" class="btn btn-danger">
+        작성
       </button>
     {% endbuttons %}
   </form>

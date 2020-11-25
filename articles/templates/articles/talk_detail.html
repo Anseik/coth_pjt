@@ -1,28 +1,31 @@
 {% extends 'base.html' %}
 {% load bootstrap4 %}
 {% block content %}
-  <div class="my-5 text-white">
-    <h1>Talk Detail</h1>
-    <a class="btn btn-primary" href="{% url 'articles:talk_index' %}">목록</a>
+  <div class="my-5 text-white ns">
+    <h1># 자유글 상세조회</h1>
+    <br>
+    <a class="btn btn-warning" href="{% url 'articles:talk_index' %}">목록</a>
     {% if request.user == talk.user %}
-      <a class="btn btn-primary" href="{% url 'articles:talk_update' talk.pk %}">글 수정</a>
+      <a class="btn btn-warning" href="{% url 'articles:talk_update' talk.pk %}">글 수정</a>
       <form class="d-inline" action="{% url 'articles:talk_delete' talk.pk %}" method="POST">
         {% csrf_token %}
-        <button class="btn btn-primary">글 삭제</button>
+        <button class="btn btn-warning">글 삭제</button>
       </form>
     {% endif %}
   </div>
   <!-- 본문 -->
-  <div id="jumbo" class="jumbotron pt-5 pb-0 d-flex flex-column align-items-center bg-dark text-white-50">
+  <h4 class="text-white"><i class="fas fa-pen"></i> : <a class="text-white" href="{% url 'accounts:profile' talk.user.pk %}">{{ talk.user.username }}</a></h4>
+  <div id="jumbo" class="jumbotron py-5 d-flex flex-column align-items-center bg-light text-body ns">
     <h3 class="display-5 mb-3">{{ talk.title }}</h3>
     {% if talk.image %}
       <img class="mb-3" src="{{ talk.image.url }}" alt="{{ talk.image }}">
     {% endif %}
-    <p class="lead">{{ talk.content | safe }}</p>
-    <hr class="my-4">
+    <div id="content" class="w-100">
+      <p class="lead">{{ talk.content | safe }}</p>
+    </div>
   </div>
-  <p class="text-white-50">작성시간 : {{ talk.created_at }}</p>
-  <p class="text-white-50">수정시간 : {{ talk.updated_at }}</p>
+  <p class="text-white-50 ns">작성시간 : {{ talk.created_at }}</p>
+  <p class="text-white-50 ns">수정시간 : {{ talk.updated_at }}</p>
   <!-- 댓글 작성 -->
   {% if request.user.is_authenticated %}
     <div>
@@ -65,15 +68,18 @@
 
 {% block script %}
   <script>
-    const imgTag = document.querySelector('#jumbo > p > img')
+    const imgTag = document.querySelector('#content p > img')
     // console.log(imgTag)
     imgTag.setAttribute('style', 'width:100% !important')
     imgTag.classList.add('rounded')
 
-    const pTag = document.querySelectorAll('#jumbo > p')[2]
-    console.log(pTag)
-    pTag.style.width = '100%'
-    pTag.style.whiteSpace = 'normal'
-    pTag.style.wordBreak = 'break-all'    
+    const pTags = document.querySelectorAll('#content > p')
+    pTags.forEach(function (pTag) {
+      // console.log(pTag)
+      // pTag.style.text-align = 'center'
+      pTag.style.wordBreak = 'break-all'
+      pTag.style.whiteSpace = 'normal'
+      pTag.style.width = '100%'
+    })  
   </script>
 {% endblock script %}

@@ -1,29 +1,33 @@
 {% extends 'base.html' %}
 {% load bootstrap4 %}
 {% block content %}
-  <div class="my-5 text-white">
-    <h1>Review Detail</h1>
-    <a class="btn btn-primary" href="{% url 'articles:review_index' %}">목록</a>
+  <div class="my-5 text-white ns">
+    <h1># 리뷰 상세조회</h1>
+    <br>
+    <a class="btn btn-warning ns" href="{% url 'articles:review_index' %}">목록</a>
     {% if request.user == review.user %}
-      <a class="btn btn-primary" href="{% url 'articles:review_update' review.pk %}">리뷰 수정</a>
+      <a class="btn btn-warning ns" href="{% url 'articles:review_update' review.pk %}">리뷰 수정</a>
       <form class="d-inline" action="{% url 'articles:review_delete' review.pk %}" method="POST">
         {% csrf_token %}
-        <button class="btn btn-primary">리뷰 삭제</button>
+        <button class="btn btn-warning ns">리뷰 삭제</button>
       </form>
     {% endif %}
   </div>
   <!-- 본문 -->
-  <div id="jumbo" class="jumbotron py-5 d-flex flex-column align-items-center bg-dark text-white-50">
+  <h4 class="text-white"><i class="fas fa-pen"></i> : <a class="text-white" href="{% url 'accounts:profile' review.user.pk %}">{{ review.user.username }}</a></h4>
+  <div id="jumbo" class="jumbotron py-5 d-flex flex-column align-items-center bg-light text-body ns">
     <h2 class="display-5 mb-3">{{ review.title }}</h2>
     {% if review.image %}
       <img class="mb-3" src="{{ review.image.url }}" alt="{{ review.image }}">
     {% endif %}
-    <p class="lead">
+    <p class="lead" style="text-align:center;">
       {% for star in stars %}
         <i class="fas fa-star text-warning"></i>
       {% endfor %}
     </p>
-    <p class="lead">{{ review.content | safe }}</p>
+    <div id="content" class="w-100">
+      <p class="lead text-white">{{ review.content | safe }}</p>
+    </div>
     <br>
     <hr class="my-4 w-100 border border-warning">
     <!-- 추천 비추천 -->
@@ -58,12 +62,12 @@
       </div>
     {% else %}
       <div>
-        <p>리뷰를 추천하기 위해서는 로그인 해야합니다.</p>
+        <p class="">리뷰를 추천하기 위해서는 로그인 해야합니다.</p>
       </div>
     {% endif %}
   </div>
-  <p class="text-white-50">작성시간 : {{ review.created_at }}</p>
-  <p class="text-white-50">수정시간 : {{ review.updated_at }}</p>
+  <p class="text-white-50 ns">작성시간 : {{ review.created_at }}</p>
+  <p class="text-white-50 ns">수정시간 : {{ review.updated_at }}</p>
   <hr class="border-light">
   <!-- 댓글 작성 -->
   {% if request.user.is_authenticated %}
@@ -81,7 +85,7 @@
   {% endif %}
   <!-- 댓글 보여주기 -->
   <h4 class="mb-3 text-white">Comment</h4>
-  <div class="mb-5">
+  <div class="mb-5 ns">
     {% for review_comment in review_comments %}
       <ul class="list-group pl-0">
         <div class="list-group-item d-flex justify-content-between">
@@ -107,91 +111,98 @@
   // 추천 기능
   const likeForm = document.querySelector('#like-form')
   // console.log(likeForm)
-  likeForm.addEventListener('submit', function (event) {
-    event.preventDefault()
-    // console.log(event)
-    const reviewPk = event.target.dataset.reviewPk
-    // console.log(reviewPk)
-    const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value
-    const headers = {
-      headers: {
-        'X-CSRFToken': csrftoken
-      },
-    }
-    axios.post(`/articles/review/${reviewPk}/like/`, {}, headers)
-    .then(function (res) {
-      // console.log(res.data)
-      const liked = res.data.liked
-      const likedCount = res.data.likedCount
-    
-      const likeIcon = document.querySelector('#like-icon')
-  
-      if (liked) {
-        likeIcon.classList.remove('far')
-        likeIcon.classList.add('fas', 'animate__animated', 'animate__bounce')
-      } else {
-        likeIcon.classList.remove('fas', 'animate__animated', 'animate__bounce')
-        likeIcon.classList.add('far')
+  if (likeForm) {
+    likeForm.addEventListener('submit', function (event) {
+      event.preventDefault()
+      // console.log(event)
+      const reviewPk = event.target.dataset.reviewPk
+      // console.log(reviewPk)
+      const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value
+      const headers = {
+        headers: {
+          'X-CSRFToken': csrftoken
+        },
       }
+      axios.post(`/articles/review/${reviewPk}/like/`, {}, headers)
+      .then(function (res) {
+        // console.log(res.data)
+        const liked = res.data.liked
+        const likedCount = res.data.likedCount
       
-      const likeShow = document.querySelector('#like-show')
-      likeShow.innerText = `추천 ${likedCount}개`
+        const likeIcon = document.querySelector('#like-icon')
+    
+        if (liked) {
+          likeIcon.classList.remove('far')
+          likeIcon.classList.add('fas', 'animate__animated', 'animate__bounce')
+        } else {
+          likeIcon.classList.remove('fas', 'animate__animated', 'animate__bounce')
+          likeIcon.classList.add('far')
+        }
+        
+        const likeShow = document.querySelector('#like-show')
+        likeShow.innerText = `추천 ${likedCount}개`
+      })
+      .catch(function (err) {
+        console.error(err)
+      })
     })
-    .catch(function (err) {
-      console.error(err)
-    })
-  })
+  }
 
-  
   // 비추천 기능
   const unlikeForm = document.querySelector('#unlike-form')
   // console.log(unlikeForm)
-  unlikeForm.addEventListener('submit', function (event) {
-    event.preventDefault()
-    // console.log(event)
-    const reviewPk = event.target.dataset.reviewPk
-    // console.log(reviewPk)
-    const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value
-    const headers = {
-      headers: {
-        'X-CSRFToken': csrftoken
-      },
-    }
-    axios.post(`/articles/review/${reviewPk}/unlike/`, {}, headers)
-    .then(function (res) {
-      // console.log(res)
-      const unliked = res.data.unliked
-      const unlikedCount = res.data.unlikedCount
-      
-      const unlikeIcon = document.querySelector('#unlike-icon')
-      if (unliked) {
-        unlikeIcon.classList.remove('far')
-        unlikeIcon.classList.add('fas', 'animate__animated', 'animate__bounce')
-      } else {
-        unlikeIcon.classList.remove('fas', 'animate__animated', 'animate__bounce')
-        unlikeIcon.classList.add('far')
+  if (unlikeForm) {
+    unlikeForm.addEventListener('submit', function (event) {
+      event.preventDefault()
+      // console.log(event)
+      const reviewPk = event.target.dataset.reviewPk
+      // console.log(reviewPk)
+      const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value
+      const headers = {
+        headers: {
+          'X-CSRFToken': csrftoken
+        },
       }
-
-      const unlikeShow = document.querySelector('#unlike-show')
-      unlikeShow.innerText = `비추천 ${unlikedCount}개`
+      axios.post(`/articles/review/${reviewPk}/unlike/`, {}, headers)
+      .then(function (res) {
+        // console.log(res)
+        const unliked = res.data.unliked
+        const unlikedCount = res.data.unlikedCount
+        
+        const unlikeIcon = document.querySelector('#unlike-icon')
+        if (unliked) {
+          unlikeIcon.classList.remove('far')
+          unlikeIcon.classList.add('fas', 'animate__animated', 'animate__bounce')
+        } else {
+          unlikeIcon.classList.remove('fas', 'animate__animated', 'animate__bounce')
+          unlikeIcon.classList.add('far')
+        }
+  
+        const unlikeShow = document.querySelector('#unlike-show')
+        unlikeShow.innerText = `비추천 ${unlikedCount}개`
+      })
+      .catch(function (err) {
+        console.error(err)
+      })
     })
-    .catch(function (err) {
-      console.error(err)
-    })
-  })
+  }
 
   // content 이미지 크기 조절
-  const imgTag = document.querySelector('#jumbo > p > img')
-  // console.log(imgTag)
-  imgTag.setAttribute('style', 'width:100% !important')
-  imgTag.classList.add('rounded')
+  const imgTag = document.querySelector('#content p > img')
+  console.log(imgTag)
+  if (imgTag) {
+    imgTag.setAttribute('style', 'width:100% !important')
+    imgTag.classList.add('rounded')
+  }
 
-  const pTag = document.querySelectorAll('#jumbo > p')[3]
-  console.log(pTag)
-  pTag.style.width = '100%'
-  pTag.style.whiteSpace = 'normal'
-  pTag.style.wordBreak = 'break-all'
-  // pTag.setAttribute('style', 'width:100%')
-  // pTag.setAttribute('style', 'white-space:normal')
+  const pTags = document.querySelectorAll('#content > p')
+  // console.log(pTags)
+  pTags.forEach(function (pTag) {
+    console.log(pTag)
+    // pTag.style.text-align = 'center'
+    pTag.style.wordBreak = 'break-all'
+    pTag.style.whiteSpace = 'normal'
+    pTag.style.width = '100%'
+  })
   </script>
 {% endblock  %}

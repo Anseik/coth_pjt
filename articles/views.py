@@ -27,7 +27,7 @@ def review_create(request):
             review = form.save(commit=False)
             review.user = request.user
             review.save()
-            return redirect('articles:review_index')
+            return redirect('articles:review_detail', review.pk)
 
     else:
         form = ReviewArticleForm()
@@ -201,7 +201,7 @@ def talk_create(request):
             talk = form.save(commit=False)
             talk.user = request.user
             talk.save()
-            return redirect('articles:talk_index')
+            return redirect('articles:talk_detail', talk.pk)
 
     else:
         form = TalkArticleForm()

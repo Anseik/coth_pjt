@@ -259,6 +259,18 @@ def detail(request, movie_pk):
     for genre in genres:
         genres_name.append(genre_dict[genre])
     # print(genres_name)
+
+    user_ranks = 0
+    for user_score in user_movie_score:
+        user_ranks = user_score.score
+
+    # print(user_ranks.score)
+
+    user_stars = []
+    for i in range(user_ranks):
+        user_stars.append('*')
+
+    print(user_stars)
    
     context = {
         'movie': movie,
@@ -267,6 +279,7 @@ def detail(request, movie_pk):
         'movie_comments': movie_comments,
         'user_movie_score': user_movie_score,
         'genres_name': genres_name,
+        'user_stars': user_stars,
     }
     return render(request, 'movies/detail.html', context)
 

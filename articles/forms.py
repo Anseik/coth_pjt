@@ -5,6 +5,15 @@ from django_summernote.widgets import SummernoteWidget
 
 
 class ReviewArticleForm(forms.ModelForm):
+    RANK_CHOICES = (
+        (5, '최고에요'),
+        (4, '재밌어요'),
+        (3, '킬링 타임용'),
+        (2, '재미없어요'),
+        (1, '최악이에요')
+    )    
+
+    rank = forms.ChoiceField(choices=RANK_CHOICES, widget=forms.RadioSelect(), label='평점')
 
     class Meta:
         model = ReviewArticle

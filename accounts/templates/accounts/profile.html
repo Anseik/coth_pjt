@@ -9,7 +9,11 @@
     {% endif %}
     <div class="media-body">
       <h1 class="mt-4 text-white np">{{ person.nickname }}</h1>
-      <p class="mb-0 text-white ns">{{ person.selfpr }}</p>
+      {% if person.selfpr  %}
+        <p class="mb-0 text-white ns">{{ person.selfpr }}</p>
+      {% else %}
+        <p class="p-2"></p>
+      {% endif %}
       <p>{% include 'accounts/_follow.html' %}</p>
     </div>
   </div>

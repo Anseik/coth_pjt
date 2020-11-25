@@ -10,14 +10,15 @@ from movies.models import Movie
 # Create your models here.
 class User(AbstractUser):
     followers = models.ManyToManyField('self', symmetrical=False, related_name='followings')
-    image = ProcessedImageField(blank=True,
+    image = ProcessedImageField(verbose_name="프로필 이미지",
+                                blank=True,
                                 processors=[Thumbnail(150, 150)],
                                 format='png',
                                 options={'quality': 100},
                                 upload_to='%Y/%m/%d')
-    selfpr = models.CharField(max_length=100)
+    selfpr = models.CharField(verbose_name="자기소개", max_length=100, blank=True, null=True)
     nickname = models.CharField(max_length=20)
-    dibs_movies = models.ManyToManyField(Movie, related_name='dibs_users', blank=True, null=True)
+    dibs_movies = models.ManyToManyField(Movie, related_name='dibs_users', blank=True)
 
     class Prefer(models.IntegerChoices):
         액션 = 28
@@ -40,9 +41,9 @@ class User(AbstractUser):
         전쟁 = 10752
         서부 = 37
 
-    genre_prefer1 = models.IntegerField(choices=Prefer.choices)
-    genre_prefer2 = models.IntegerField(choices=Prefer.choices)
-    genre_prefer3 = models.IntegerField(choices=Prefer.choices)    
+    genre_prefer1 = models.IntegerField(verbose_name="선호장르1 *", choices=Prefer.choices)
+    genre_prefer2 = models.IntegerField(verbose_name="선호장르2 *", choices=Prefer.choices)
+    genre_prefer3 = models.IntegerField(verbose_name="선호장르3 *", choices=Prefer.choices)    
 
 
 class UserFavoriteMovie(models.Model):

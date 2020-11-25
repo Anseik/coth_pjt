@@ -75,15 +75,20 @@
     color: wheat;
     }
     img { 
-    filter: brightness(60%); 
+    filter: brightness(60%);
+    width: 100%;
+    /* height: auto !important; */
     }
     .ns{font-family: 'Noto Sans KR', sans-serif;}
     .np{font-family: 'Nanum Pen Script', cursive;}
     .nb{font-family: 'Nanum Brush Script', cursive;}
+    body {
+      background-color: black;
+    }
   </style>
 </head>
 <body>
-  <div class="bg_b nb">
+  <div class=" bg-dark nb">
     <div id="carouselExampleFade" class="carousel slide carousel-fade row" data-ride="carousel">
         <div style="position: absolute;" class="carousel-item active grid12-6">
           <img src="{% static './assets/img/first/Toy_Story.jpg' %}" class="d-block w-100 h-auto" alt="...">

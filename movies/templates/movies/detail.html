@@ -25,14 +25,14 @@
         <h6 class="ns">언어 : {{ movie.original_language }}</h6>
         <h6 class="ns">원작 제목 : {{ movie.original_title }}</h6>
       </div>
-      <div class="p-4 ns">
+      <div class="p-4 ns d-flex flex-column justify-content-between">
         <h4>관련 영상</h4>
         <ul class="list-unstyled">
-          <li class="text-left" id="li-0"><a id="a-0" class="text-white row" href=""><img class="col-4" id="img-0" src="" alt=""><span class="col-8 pt-2" id="span-0"></span></a></li>
-          <li class="text-left" id="li-1"><a id="a-1" class="text-white row" href=""><img class="col-4" id="img-1" src="" alt=""><span class="col-8 pt-2" id="span-1"></span></a></li>
-          <li class="text-left" id="li-2"><a id="a-2" class="text-white row" href=""><img class="col-4" id="img-2" src="" alt=""><span class="col-8 pt-2" id="span-2"></span></a></li>
-          <li class="text-left" id="li-3"><a id="a-3" class="text-white row" href=""><img class="col-4" id="img-3" src="" alt=""><span class="col-8 pt-2" id="span-3"></span></a></li>
-          <li class="text-left" id="li-4"><a id="a-4" class="text-white row" href=""><img class="col-4" id="img-4" src="" alt=""><span class="col-8 pt-2" id="span-4"></span></a></li>
+          <li class="text-left mt-2" id="li-0"><a id="a-0" class="text-white row" href=""><img class="col-4" id="img-0" src="" alt=""><span class="col-8 pt-2" id="span-0"></span></a></li>
+          <li class="text-left mt-2" id="li-1"><a id="a-1" class="text-white row" href=""><img class="col-4" id="img-1" src="" alt=""><span class="col-8 pt-2" id="span-1"></span></a></li>
+          <li class="text-left mt-2" id="li-2"><a id="a-2" class="text-white row" href=""><img class="col-4" id="img-2" src="" alt=""><span class="col-8 pt-2" id="span-2"></span></a></li>
+          <li class="text-left mt-2" id="li-3"><a id="a-3" class="text-white row" href=""><img class="col-4" id="img-3" src="" alt=""><span class="col-8 pt-2" id="span-3"></span></a></li>
+          <li class="text-left mt-2" id="li-4"><a id="a-4" class="text-white row" href=""><img class="col-4" id="img-4" src="" alt=""><span class="col-8 pt-2" id="span-4"></span></a></li>
         </ul>
       </div>
     </div>
@@ -40,6 +40,20 @@
 
   <!-- 평점 -->
   <div class="mt-5 mb-3 text-white">
+    <!-- 평점 보여주기 -->
+    {% if request.user.is_authenticated %}
+      {% if user_stars %}
+        <span class="ns">내가 준 평점 : </span>
+        {% for user_star in user_stars %}
+          <i class="fas fa-star text-warning"></i>
+        {% endfor %}
+        <form class="ns mx-3 d-inline" action="{% url 'movies:delete_user_score' movie.pk %}" method="POST">
+        {% csrf_token %}
+          <button class="btn btn-sm btn-danger">평점 삭제</button>
+        </form>
+      {% endif %}  
+    {% endif %}  
+
     <!-- 평점 매기기 -->
     {% if request.user.is_authenticated %}
       <form class="form text-white ns" action="{% url 'movies:save_user_score' movie.pk %}" method="POST">
@@ -59,22 +73,9 @@
       <p class="ns">로그인하면 평점을 매길 수 있습니다.</p>
     {% endif %}
 
-    <!-- 평점 보여주기 -->
-    {% if request.user.is_authenticated %}
-      {% if user_movie_score %}
-        {% for user_score in user_movie_score %}
-          <p class="text-white ns">내가 준 평점 : {{ user_score.score }}</p>
-          <form class="ns" action="{% url 'movies:delete_user_score' movie.pk %}" method="POST">
-          {% csrf_token %}
-            <button class="btn btn-sm btn-danger">평점 삭제</button>
-          </form>
-        {% endfor %}
-      {% endif %}  
-    {% endif %}
   </div>
 
   <!-- 댓글 작성-->
-  
   <div class="text-white ns">
     {% if request.user.is_authenticated %}
       <form class="form text-white" action="{% url 'movies:movie_create_comment' movie.pk %}" method="POST">
@@ -92,7 +93,7 @@
   </div>
 
   <!-- 댓글 보여주기-->
-  <h4 class="mb-3 text-white ns">Comment</h4>
+  <h4 class="mb-3 text-white ns">댓글</h4>
   <div class="mb-5 ns">
     {% for movie_comment in movie_comments %}
       <ul class="list-group pl-0">
@@ -159,13 +160,22 @@
             movieIframe.src = `http://www.youtube.com/embed/${VideoListId}`
           })
         })
-
-
-        
       })
       .catch(err => {
         console.log(err)
       })
+
+      // Radio
+      const radios = document.querySelectorAll('.form-check')
+      radios.forEach(function (radio) {
+        radio.classList.add('d-inline-block')
+      })
+
+      const radios_form = document.querySelector('.radio')
+      // console.log(radios_form)
+      radios_form.classList.add('d-flex')
+      radios_form.classList.add('justify-content-between')
+
   </script>
 {% endblock  %}
 
