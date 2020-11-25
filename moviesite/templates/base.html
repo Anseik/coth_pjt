@@ -23,6 +23,7 @@
   <link href="http://fonts.googleapis.com/earlyaccess/nanummyeongjo.css" rel="stylesheet">
   <link href="http://fonts.googleapis.com/earlyaccess/jejuhallasan.css" rel="stylesheet">
   <link href="http://fonts.googleapis.com/earlyaccess/nanumgothiccoding.css" rel="stylesheet">
+  <link rel="icon" href="data:;base64,iVBORw0KGgo=">
   <title>Base</title>
   <style type="text/css">
     .select li:hover{
@@ -61,7 +62,7 @@
                 <li class="main_nav_tab nav-item"><a class="text-reset text-decoration-none" href="{% url 'movies:index' %}">홈</a></li>
                 <li class="main_nav_tab nav-item"><a class="text-reset text-decoration-none" href="{% url 'articles:review_index' %}">사용자 리뷰</a></li>
                 <li class="main_nav_tab nav-item"><a class="text-reset text-decoration-none" href="{% url 'articles:talk_index' %}">자유게시판</a></li>
-                <li class="main_nav_tab nav-item"><a class="text-reset text-decoration-none" href="{% url 'movies:new_movies' %}">최신 콘텐츠</a></li>
+                <li class="main_nav_tab nav-item"><a class="text-reset text-decoration-none" href="{% url 'movies:new_movies' %}">최신 영화</a></li>
                 {% if request.user.is_authenticated %}
                   <li class="main_nav_tab nav-item"><a class="text-reset text-decoration-none" href="{% url 'movies:mytype_movie' %}">취향 저격</a></li>
                   <li class="main_nav_tab nav-item"><a class="text-reset text-decoration-none" href="{% url 'movies:mydibs_movie' request.user.pk %}">찜한 영화</a></li>
@@ -83,7 +84,8 @@
             </ul>
             <ul class="sub_nav navbar-nav">
                 {% if request.user.is_authenticated %}
-                  <li class="sub_nav_tab nav-item"><a class="text-reset text-decoration-none nav-link p-0" href="{% url 'accounts:profile' request.user.pk %}"><i class="fas fa-user"> {{ request.user.username }}</i></a></li>
+                  <li class="sub_nav_tab nav-item"><a class="text-reset text-decoration-none nav-link p-0" href="{% url 'accounts:profile' request.user.pk %}"><i class="fas fa-user"> {{ request.user.username }} 프로필</i></a></li>
+                  <li class="sub_nav_tab nav-item"><a class="text-reset text-decoration-none nav-link p-0" href="{% url 'accounts:update' request.user.pk %}"><i class="fas fa-user-edit"></i> 회원정보수정</a></li>
                   <li class="sub_nav_tab nav-item"><a class="text-reset text-decoration-none nav-link p-0" href="{% url 'accounts:logout' %}"><i class="fas fa-sign-out-alt"></i> 로그아웃</a></li>
                 {% else %}
                   <li class="sub_nav_tab nav-item"><a class="text-reset text-decoration-none nav-link p-0" href="{% url 'accounts:signup' %}"><i class="fas fa-user-plus"></i> 회원가입</a></li>

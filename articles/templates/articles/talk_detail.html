@@ -13,17 +13,16 @@
     {% endif %}
   </div>
   <!-- 본문 -->
-  <div class="jumbotron py-5">
+  <div id="jumbo" class="jumbotron pt-5 pb-0 d-flex flex-column align-items-center bg-dark text-white-50">
     <h3 class="display-5 mb-3">{{ talk.title }}</h3>
     {% if talk.image %}
       <img class="mb-3" src="{{ talk.image.url }}" alt="{{ talk.image }}">
-    {% endif %}  
-    <p class="lead">{{ talk.content }}</p>
+    {% endif %}
+    <p class="lead">{{ talk.content | safe }}</p>
     <hr class="my-4">
-    <p>작성시간 : {{ talk.created_at }}</p>
-    <p>수정시간 : {{ talk.updated_at }}</p>
   </div>
-  <hr>
+  <p class="text-white-50">작성시간 : {{ talk.created_at }}</p>
+  <p class="text-white-50">수정시간 : {{ talk.updated_at }}</p>
   <!-- 댓글 작성 -->
   {% if request.user.is_authenticated %}
     <div>
@@ -63,3 +62,18 @@
     </div>
   </div>
 {% endblock %}
+
+{% block script %}
+  <script>
+    const imgTag = document.querySelector('#jumbo > p > img')
+    // console.log(imgTag)
+    imgTag.setAttribute('style', 'width:100% !important')
+    imgTag.classList.add('rounded')
+
+    const pTag = document.querySelectorAll('#jumbo > p')[2]
+    console.log(pTag)
+    pTag.style.width = '100%'
+    pTag.style.whiteSpace = 'normal'
+    pTag.style.wordBreak = 'break-all'    
+  </script>
+{% endblock script %}

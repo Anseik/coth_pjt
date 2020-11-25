@@ -21,6 +21,7 @@ from movies import views
 
 urlpatterns = [
     path('', views.first),
+    path('summernote/', include('django_summernote.urls')),
     path('admin/', admin.site.urls),
     path('accounts/', include('accounts.urls')),
     path('articles/', include('articles.urls')),

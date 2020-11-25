@@ -13,23 +13,21 @@
     {% endif %}
   </div>
   <!-- 본문 -->
-  <div class="jumbotron py-5">
+  <div id="jumbo" class="jumbotron py-5 d-flex flex-column align-items-center bg-dark text-white-50">
     <h3 class="display-5 mb-3">{{ review.title }}</h3>
     {% if review.image %}
       <img class="mb-3" src="{{ review.image.url }}" alt="{{ review.image }}">
     {% endif %}
     <p class="lead">평점{{ review.rank }}</p>
-    <p class="lead">{{ review.content }}</p>
-    <hr class="my-4">
-    <p>작성시간 : {{ review.created_at }}</p>
-    <p>수정시간 : {{ review.updated_at }}</p>
-    <hr class="my-4">
+    <p class="lead">{{ review.content | safe }}</p>
+    <br>
+    <hr class="my-4 w-100 border border-warning">
     <!-- 추천 비추천 -->
     {% if request.user.is_authenticated %}
       <div class="container">
-        <div class="row">
+        <div class="row d-flex justify-content-center">
           <!-- 추천 -->
-          <div class="col-2 d-flex flex-column justify-content-center align-items-center">
+          <div class="d-flex flex-column justify-content-center align-items-center mx-auto">
             <form id="like-form" class="mx-auto" data-review-pk="{{ review.pk }}">
               {% csrf_token %}
               {% if request.user in review.like.all %}
@@ -41,7 +39,7 @@
             <p id="like-show">추천 {{ review.like.all|length }}개</p>
           </div>
           <!-- 비추천 -->
-          <div class="col-2 d-flex flex-column justify-content-center align-items-center">
+          <div class="d-flex flex-column justify-content-center align-items-center mx-auto">
             <form id="unlike-form" class="" data-review-pk="{{ review.pk }}">
               {% csrf_token %}
               {% if request.user in review.unlike.all %}
@@ -60,7 +58,9 @@
       </div>
     {% endif %}
   </div>
-  <hr>
+  <p class="text-white-50">작성시간 : {{ review.created_at }}</p>
+  <p class="text-white-50">수정시간 : {{ review.updated_at }}</p>
+  <hr class="border-light">
   <!-- 댓글 작성 -->
   {% if request.user.is_authenticated %}
     <div>
@@ -175,5 +175,19 @@
       console.error(err)
     })
   })
+
+  // content 이미지 크기 조절
+  const imgTag = document.querySelector('#jumbo > p > img')
+  // console.log(imgTag)
+  imgTag.setAttribute('style', 'width:100% !important')
+  imgTag.classList.add('rounded')
+
+  const pTag = document.querySelectorAll('#jumbo > p')[3]
+  console.log(pTag)
+  pTag.style.width = '100%'
+  pTag.style.whiteSpace = 'normal'
+  pTag.style.wordBreak = 'break-all'
+  // pTag.setAttribute('style', 'width:100%')
+  // pTag.setAttribute('style', 'white-space:normal')
   </script>
 {% endblock  %}

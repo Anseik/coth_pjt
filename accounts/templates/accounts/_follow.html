@@ -1,22 +1,19 @@
-<div>
-  <hr>
-  {% with followings=person.followings.all followers=person.followers.all %}
-    <p id="follow-count" class="lead text-white">
-      팔로잉 : {{ followings|length }} / 팔로워 : {{ followers|length }}
-    </p>
-    <!-- 팔로우 버튼 -->
-    {% if request.user != person %}
-      <form id="follow-form" data-user-pk="{{ person.pk }}">
-        {% csrf_token %}
-        {% if request.user in followers %}
-          <button id="follow-btn" class="btn-secondary btn-lg" role="button">Unfollow</button>
-        {% else %}
-          <button id="follow-btn" class="btn-primary btn-lg" role="button">Follow</button>
-        {% endif %}
-      </form>
-    {% endif %}
-  {% endwith %}
-</div>
+{% with followings=person.followings.all followers=person.followers.all %}
+  <p id="follow-count" class="lead text-white np">
+    팔로잉 : {{ followings|length }} / 팔로워 : {{ followers|length }}
+  </p>
+  <!-- 팔로우 버튼 -->
+  {% if request.user != person %}
+    <form class="ns" id="follow-form" data-user-pk="{{ person.pk }}">
+      {% csrf_token %}
+      {% if request.user in followers %}
+        <button id="follow-btn" class="btn-secondary rounded" role="button"><i id="follow-icon" class="far fa-address-book font-weight-bold"> Unfollow</i></button>
+      {% else %}
+        <button id="follow-btn" class="btn-primary rounded" role="button"><i id="follow-icon" class="fas fa-address-book"> Follow</i></button>
+      {% endif %}
+    </form>
+  {% endif %}
+{% endwith %}
 {% block script %}
   <script>
     const followForm = document.querySelector('#follow-form')
@@ -38,17 +35,27 @@
         const follow = res.data.follow
         const followers_cnt = res.data.followers_cnt
         const followings_cnt = res.data.followings_cnt
-        // console.log(follow,followers_cnt, followings_cnt)
+        // console.log(follow, followers_cnt, followings_cnt)
 
         const followBtn = document.querySelector('#follow-btn')
+        const followIcon = document.querySelector('#follow-icon')
+
         if (follow) {
           followBtn.classList.add('btn-secondary')
           followBtn.classList.remove('btn-primary')
-          followBtn.innerText = 'Unfollow'
+
+          followIcon.classList.add('far')
+          followIcon.classList.add('font-weight-bold')
+          followIcon.classList.remove('fas')
+          followIcon.innerText = ' Unfollow'
+
         } else {
           followBtn.classList.add('btn-primary')
           followBtn.classList.remove('btn-secondary')
-          followBtn.innerText = 'Follow'
+
+          followIcon.classList.add('fas')
+          followIcon.classList.remove('far')
+          followIcon.innerText = ' Follow'
         }
 
         const followCount = document.querySelector('#follow-count')

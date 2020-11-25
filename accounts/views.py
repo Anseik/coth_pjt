@@ -7,6 +7,8 @@ from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm
 
 from django.views.decorators.http import require_http_methods, require_POST, require_GET
 
+from django.http import JsonResponse
+
 from .forms import CustomUserCreationForm, CustomUserChangeForm
 
 # Create your views here.
@@ -58,18 +60,20 @@ def logout(request):
 @require_http_methods(['GET', 'POST'])
 def update(request, user_pk):
     user = get_object_or_404(get_user_model(), pk=user_pk)
-    if request.method == 'POST':
-        form = CustomUserChangeForm(request.POST, request.FILES, instance=user)
-        if form.is_valid():
-            form.save()
-            return redirect('accounts:profile', user.pk)
-    
-    else:
-        form = CustomUserChangeForm(instance=user)
-    context = {
-        'form': form,
-    }
-    return render(request, 'accounts/update.html', context)
+    if request.user == user:
+        if request.method == 'POST':
+            form = CustomUserChangeForm(request.POST, request.FILES, instance=user)
+            if form.is_valid():
+                form.save()
+                return redirect('accounts:profile', user.pk)
+        
+        else:
+            form = CustomUserChangeForm(instance=user)
+        context = {
+            'form': form,
+        }
+        return render(request, 'accounts/update.html', context)
+    return redirect(request, 'movies:index')
 
 
 @require_http_methods(['GET', 'POST'])
@@ -122,4 +126,4 @@ def follow(request, user_pk):
                 'followers_cnt': person.followers.count(),
             }
             return JsonResponse(context)
-    return redirect('accounts:profile', person.username)
+    return redirect('accounts:profile', person.pk)

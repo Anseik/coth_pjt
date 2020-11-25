@@ -54,7 +54,7 @@
 
   <!-- 최신 콘텐츠 -->
     <div class="d-inline-block mt-5 pt-3">
-      <h3 class="text-center text-white ns">최신 콘텐츠</h3>
+      <h3 class="text-center text-white ns">최신 영화</h3>
       <div id="new10" class="carousel slide" data-ride="carousel">
         <ol class="carousel-indicators">
           <li data-target="#new10" data-slide-to="0" class="active"></li>
@@ -257,7 +257,7 @@
     {% include 'movies/_prefer2.html' %}
     {% include 'movies/_prefer3.html' %}
   {% else %}
-    <h3 class="text-white mt-5 ns">&ensp;&ensp;&ensp;#전체영화</h3><br>
+    <h3 class="text-white mt-5 ns">&ensp;&ensp;&ensp;# 평점 높은 영화</h3><br>
     <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-4 mb-5">
       {% for movie in movies %}
         <div class="d-flex justify-content-center">

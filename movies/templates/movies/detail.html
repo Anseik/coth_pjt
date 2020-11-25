@@ -3,31 +3,29 @@
 {% block content %}
   <!-- 본문-->
   <div class="text-center text-white mt-5">
-    <!-- <h1>상세보기</h1> -->
-    <h1 id="movie-title" class="mt-5 py-4">{{ movie.title }}</h1>
-    {% comment %} 유튜브 API를 통해 iframe 동영상 넣을 자리 {% endcomment %}
+    <h1 id="movie-title" class="mt-5 py-4 ns">{{ movie.title }}</h1>
     <div class="embed-responsive embed-responsive-16by9">
       <iframe id="movie-iframe" class="embed-responsive-item" src="http://www.youtube.com/embed/{{videoId}}" allowfullscreen></iframe>
     </div>
     <div class="w-100 mx-0 row row-cols-1 row-cols-md-3">
       <img class="p-4 rounded" src="http://image.tmdb.org/t/p/w185/{{ movie.poster_path }}" alt="">
       <div class="d-flex flex-column justify-content-between p-4">
-        <h4>영화 정보</h4>
-        <div>장르 :
+        <h4 class="ns">영화 정보</h4>
+        <div class="ns">장르 :
           {% for genre_name in genres_name  %}
             <span>{{ genre_name }}</span>
           {% endfor %}
         </div>
-        <h5>줄거리</h5>
-        <h6>{{ movie.overview }}</h5>
+        <h5 class="ns">줄거리</h5>
+        <h6 class="ns">{{ movie.overview }}</h5>
         <hr>
-        <h6>평점 : {{ movie.vote_average }}</h6>
-        <h6>투표 수 : {{ movie.vote_count }}</h6>
-        <h6>개봉 날짜 : {{ movie.release_date }}</h6>
-        <h6>언어 : {{ movie.original_language }}</h6>
-        <h6>원작 제목 : {{ movie.original_title }}</h6>
+        <h6 class="ns">평점 : {{ movie.vote_average }}</h6>
+        <h6 class="ns">투표 수 : {{ movie.vote_count }}</h6>
+        <h6 class="ns">개봉 날짜 : {{ movie.release_date }}</h6>
+        <h6 class="ns">언어 : {{ movie.original_language }}</h6>
+        <h6 class="ns">원작 제목 : {{ movie.original_title }}</h6>
       </div>
-      <div class="p-4">
+      <div class="p-4 ns">
         <h4>관련 영상</h4>
         <ul class="list-unstyled">
           <li class="text-left" id="li-0"><a id="a-0" class="text-white row" href=""><img class="col-4" id="img-0" src="" alt=""><span class="col-8 pt-2" id="span-0"></span></a></li>
@@ -44,7 +42,7 @@
   <div class="mt-5 mb-3 text-white">
     <!-- 평점 매기기 -->
     {% if request.user.is_authenticated %}
-      <form class="form text-white" action="{% url 'movies:save_user_score' movie.pk %}" method="POST">
+      <form class="form text-white ns" action="{% url 'movies:save_user_score' movie.pk %}" method="POST">
         {% csrf_token %}
         {% bootstrap_form user_score_form %}
         {% buttons %}
@@ -58,15 +56,15 @@
         {% endbuttons %}
       </form>
     {% else %}
-      <p>로그인하면 평점을 매길 수 있습니다.</p>
+      <p class="ns">로그인하면 평점을 매길 수 있습니다.</p>
     {% endif %}
 
     <!-- 평점 보여주기 -->
     {% if request.user.is_authenticated %}
       {% if user_movie_score %}
         {% for user_score in user_movie_score %}
-          <p class="text-white">내가 준 평점 : {{ user_score.score }}</p>
-          <form class="" action="{% url 'movies:delete_user_score' movie.pk %}" method="POST">
+          <p class="text-white ns">내가 준 평점 : {{ user_score.score }}</p>
+          <form class="ns" action="{% url 'movies:delete_user_score' movie.pk %}" method="POST">
           {% csrf_token %}
             <button class="btn btn-sm btn-danger">평점 삭제</button>
           </form>
@@ -77,7 +75,7 @@
 
   <!-- 댓글 작성-->
   
-  <div class="text-white">
+  <div class="text-white ns">
     {% if request.user.is_authenticated %}
       <form class="form text-white" action="{% url 'movies:movie_create_comment' movie.pk %}" method="POST">
         {% csrf_token %}
@@ -94,8 +92,8 @@
   </div>
 
   <!-- 댓글 보여주기-->
-  <h4 class="mb-3 text-white">Comment</h4>
-  <div class="mb-5">
+  <h4 class="mb-3 text-white ns">Comment</h4>
+  <div class="mb-5 ns">
     {% for movie_comment in movie_comments %}
       <ul class="list-group pl-0">
         <div class="list-group-item d-flex justify-content-between">

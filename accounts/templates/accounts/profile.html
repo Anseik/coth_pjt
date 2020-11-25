@@ -1,64 +1,69 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
-  <div class="media mt-5">
+  <div class="media mt-5 ns">
     {% if person.image %}
       <img src="{{ person.image.url }}" alt="{{ person.image }}" class="align-self-center mr-3 rounded-circle border border-warning mt-4">
     {% else %}
       <img width=150px height=150px src="{% static 'accounts/profile.png' %}" class="align-self-center mr-3 rounded-circle border border-warning mt-4" alt="profile">
     {% endif %}
     <div class="media-body">
-      <h1 class="mt-4 text-white">{{ person.nickname }}</h1>
-      <p class="mb-0 text-white">{{ person.selfpr }}</p>
+      <h1 class="mt-4 text-white np">{{ person.nickname }}</h1>
+      <p class="mb-0 text-white ns">{{ person.selfpr }}</p>
       <p>{% include 'accounts/_follow.html' %}</p>
     </div>
   </div>
-  <p class="mt-3 ml-4"><a class="text-decoration-none text-white"href="{% url 'accounts:update' person.pk %}">회원정보수정</a></p>
-  <hr>
-  <ul class="list-group">
-    <li class="list-group-item list-group-item-info">{{ person.username }}이 작성한 리뷰</li>
-    {% for review in person.reviewarticle_set.all %}
-      <li class="list-group-item"><p class="my-2"><a href="{% url 'articles:review_detail' review.pk %}" class="badge badge-success">바로가기</a>&ensp;&ensp;{{ review.title }}</p></li>
-    {% endfor %}
+  <br>
+  <ul class="list-group ns">
+    <li class="list-group-item" style="background-color:#f3eac2;">{{ person.username }}님이 작성한 글</li>
+    {% if person.reviewarticle_set.all or person.talkarticle_set.all %}
+      {% for review in person.reviewarticle_set.all %}
+        <li class="list-group-item"><p class="my-2"><a href="{% url 'articles:review_detail' review.pk %}" class="badge text-body" style="background-color:#f5b461;">바로가기</a>&ensp;&ensp;{{ review.title }}</p></li>
+      {% endfor %}
+      {% for talk in person.talkarticle_set.all %}
+        <li class="list-group-item"><p class="my-2"><a href="{% url 'articles:talk_detail' talk.pk %}" class="badge text-body" style="background-color:#f5b461;">바로가기</a>&ensp;&ensp;{{ talk.title }}</p></li>
+      {% endfor %}
+    {% else %}
+      <li class="list-group-item"><p class="my-2">아직 작성한 글이 없습니다.</p></li>  
+    {% endif %}
   </ul>
-  <hr>
-  <ul class="list-group">
-    <li class="list-group-item list-group-item-info">{{ person.username }}이 작성한 리뷰 댓글</li>
-    {% for review_comment in person.reviewcomment_set.all %}
-      <li class="list-group-item"><p class="my-2"><a href="{% url 'articles:review_detail' review_comment.review_article.pk %}" class="badge badge-success">바로가기</a>&ensp;&ensp;{{ review_comment.content }}</p></li>
-    {% endfor %}
+  <br>
+  <ul class="list-group ns">
+    <li class="list-group-item" style="background-color:#f3eac2;">{{ person.username }}님이 작성한 댓글</li>
+    {% if person.reviewcomment_set.all or person.talkcomment_set.all %}
+      {% for review_comment in person.reviewcomment_set.all %}
+        <li class="list-group-item"><p class="my-2"><a href="{% url 'articles:review_detail' review_comment.review_article.pk %}" class="badge text-body" style="background-color:#f5b461;">바로가기</a>&ensp;&ensp;{{ review_comment.content }}</p></li>
+      {% endfor %}
+      {% for talk_comment in person.talkcomment_set.all %}
+        <li class="list-group-item"><p class="my-2"><a href="{% url 'articles:talk_detail' talk_comment.talk_article.pk %}" class="badge text-body" style="background-color:#f5b461;">바로가기</a>&ensp;&ensp;{{ talk_comment.content }}</p></li>
+      {% endfor %}
+    {% else %}
+      <li class="list-group-item"><p class="my-2">아직 작성한 댓글이 없습니다.</p></li>  
+    {% endif %}
   </ul>
-  <hr>
-  <ul class="list-group">
-    <li class="list-group-item list-group-item-info">{{ person.username }}이 작성한 글</li>
-    {% for talk in person.talkarticle_set.all %}
-      <li class="list-group-item"><p class="my-2"><a href="{% url 'articles:talk_detail' talk.pk %}" class="badge badge-success">바로가기</a>&ensp;&ensp;{{ talk.title }}</p></li>
-    {% endfor %}
+  <br>
+  <ul class="list-group ns">
+    <li class="list-group-item" style="background-color:#f3eac2;">{{ person.username }}님이 추천한 게시글</li>
+    {% if person.like_review.all %}
+      {% for review in person.like_review.all %}
+        <li class="list-group-item"><p class="my-2"><a href="{% url 'articles:review_detail' review.pk %}" class="badge text-body" style="background-color:#f5b461;">바로가기</a>&ensp;&ensp;{{ review.title }}</p></li>
+      {% endfor %}
+    {% else %}
+      <li class="list-group-item"><p class="my-2">아직 추천한 게시글이 없습니다.</p></li>  
+    {% endif %}
   </ul>
-  <hr>
-  <ul class="list-group">
-    <li class="list-group-item list-group-item-info">{{ person.username }}이 작성한 댓글</li>
-    {% for talk_comment in person.talkcomment_set.all %}
-      <li class="list-group-item"><p class="my-2"><a href="{% url 'articles:talk_detail' talk_comment.talk_article.pk %}" class="badge badge-success">바로가기</a>&ensp;&ensp;{{ talk_comment.content }}</p></li>
-    {% endfor %}
+  <br>
+  <ul class="list-group ns mb-5">
+    <li class="list-group-item" style="background-color:#f3eac2;">{{ person.username }}님이 비추천한 게시글</li>
+    {% if person.unlike_review.all %}
+      {% for review in person.unlike_review.all %}
+        <li class="list-group-item"><p class="my-2"><a href="{% url 'articles:review_detail' review.pk %}" class="badge text-body" style="background-color:#f5b461;">바로가기</a>&ensp;&ensp;{{ review.title }}</p></li>
+      {% endfor %}
+    {% else %}
+      <li class="list-group-item"><p class="my-2">아직 비추천한 게시글이 없습니다.</p></li>
+    {% endif %}
   </ul>
-  <hr>  
-
-  {% comment %} 
-  <ul class="list-group">
-    <li class="list-group-item list-group-item-primary">{{ person.username }}이 좋아요한 게시글</li>
-    {% for review in person.like_review.all %}
-      <li class="list-group-item"><p class="d-flex justify-content-between my-2">{{ review.title }}&ensp;<a href="{% url 'community:detail' review.pk %}" class="badge badge-success">Go</a></p></li>
-    {% endfor %}
-  </ul>
-  <hr>
-  <ul class="list-group mb-5">
-    <li class="list-group-item list-group-item-danger">{{ person.username }}이 싫어요한 게시글</li>
-    {% for review in person.unlike_review.all %}
-      <li class="list-group-item"><p class="d-flex justify-content-between my-2">{{ review.title }}&ensp;<a href="{% url 'community:detail' review.pk %}" class="badge badge-success">Go</a></p></li>
-    {% endfor %}
-  </ul>
-  {% endcomment %}
+ 
   
 
 {% endblock %}
