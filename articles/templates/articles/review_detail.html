@@ -14,11 +14,15 @@
   </div>
   <!-- 본문 -->
   <div id="jumbo" class="jumbotron py-5 d-flex flex-column align-items-center bg-dark text-white-50">
-    <h3 class="display-5 mb-3">{{ review.title }}</h3>
+    <h2 class="display-5 mb-3">{{ review.title }}</h2>
     {% if review.image %}
       <img class="mb-3" src="{{ review.image.url }}" alt="{{ review.image }}">
     {% endif %}
-    <p class="lead">평점{{ review.rank }}</p>
+    <p class="lead">
+      {% for star in stars %}
+        <i class="fas fa-star text-warning"></i>
+      {% endfor %}
+    </p>
     <p class="lead">{{ review.content | safe }}</p>
     <br>
     <hr class="my-4 w-100 border border-warning">

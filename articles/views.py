@@ -46,11 +46,15 @@ def review_detail(request, review_pk):
 
     review_comment_form = ReviewCommentForm()
     review_comments = review.reviewcomment_set.all()
-    # rank = ('★' * review.rank) + '☆' * (5 - review.rank)
+    stars = []
+    for i in range(review.rank):
+        stars.append('*')
+
     context = {
         'review': review,
         'review_comment_form': review_comment_form,
         'review_comments': review_comments,
+        'stars': stars,
         # 'rank': rank,
     }
     return render(request, 'articles/review_detail.html', context)
