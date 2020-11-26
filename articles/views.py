@@ -93,10 +93,15 @@ def review_delete(request, review_pk):
 
 @require_POST
 def review_create_comment(request, review_pk):
+    # print('함수실행!!!')
     if request.user.is_authenticated:
+        # print('인증된 유저!!!')
         review = get_object_or_404(ReviewArticle, pk=review_pk)
+        # print(review)
         review_comment_form = ReviewCommentForm(request.POST)
+        # print(review_comment_form)
         if review_comment_form.is_valid():
+            # print('유효성검사 통과!!!')
             review_comment = review_comment_form.save(commit=False)
             review_comment.review_article = review
             review_comment.user = request.user
@@ -105,7 +110,7 @@ def review_create_comment(request, review_pk):
 
         context = {
             'review': review,
-            'comment_form': comment_form,
+            'review_comment_form': review_comment_form,
         }
         return render(request, 'articles/review_detail.html', context)
     else:
@@ -264,6 +269,7 @@ def talk_create_comment(request, talk_pk):
     if request.user.is_authenticated:
         talk = get_object_or_404(TalkArticle, pk=talk_pk)
         talk_comment_form = TalkCommentForm(request.POST)
+        print(talk_comment_form)
         if talk_comment_form.is_valid():
             talk_comment = talk_comment_form.save(commit=False)
             talk_comment.talk_article = talk

@@ -72,7 +72,7 @@
   <!-- 댓글 작성 -->
   {% if request.user.is_authenticated %}
     <div>
-      <form class="form text-white" action="{% url 'articles:review_create_comment' review.pk %}" method="POST">
+      <form id="comment_form" class="form text-white" data-review-pk="{{ review.pk }}" action="{% url 'articles:review_create_comment' review.pk %}" method="POST">
         {% csrf_token %}
         {% bootstrap_form review_comment_form %}
         {% buttons %}
@@ -189,7 +189,7 @@
 
   // content 이미지 크기 조절
   const imgTag = document.querySelector('#content p > img')
-  console.log(imgTag)
+  // console.log(imgTag)
   if (imgTag) {
     imgTag.setAttribute('style', 'width:100% !important')
     imgTag.classList.add('rounded')
@@ -198,11 +198,42 @@
   const pTags = document.querySelectorAll('#content > p')
   // console.log(pTags)
   pTags.forEach(function (pTag) {
-    console.log(pTag)
+    // console.log(pTag)
     // pTag.style.text-align = 'center'
     pTag.style.wordBreak = 'break-all'
     pTag.style.whiteSpace = 'normal'
     pTag.style.width = '100%'
   })
+
+  // 댓글 작성 비동기 요청 처리
+  // const commentForm = document.querySelector('#comment_form')
+  // // console.log(commentForm)
+  // commentForm.addEventListener('submit', function (event) {
+  //   event.preventDefault()
+  //   // console.log('이벤트 발생!!!!!')
+  //   // console.log(event.target)
+  //   const inputData = document.querySelector('#id_content').value
+  //   // console.log(inputData)
+  //   const reviewPk = event.target.dataset.reviewPk
+  //   const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value
+  //   // console.log(reviewPk, csrftoken)
+  //   const headers = {
+  //     headers: {
+  //       'X-CSRFToken': csrftoken
+  //     }
+  //   }
+
+  //   const data = {
+  //     'inputData': inputData,
+  //   }  
+      
+  //   axios.post(`/articles/review/${reviewPk}/comments/`, data, headers)
+  //     .then(res => {
+  //       console.log(res.data)
+  //     })
+  //     .catch(err => {
+  //       console.log(err)
+  //     })
+  // })
   </script>
 {% endblock  %}
