@@ -16,6 +16,7 @@ def review_index(request):
         'reviews': reviews,
     }
     return render(request, 'articles/review_index.html', context)
+    
 
 
 @login_required
